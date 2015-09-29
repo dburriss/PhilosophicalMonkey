@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{75C104B1-D792-4433-BC2E-598F3F5C0584}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FF83DE93-CBA3-4E85-8BFD-EA810C34B513}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+		NuGet.Config = NuGet.Config
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ChimpLab.PhilosophicalMonkey", "src\ChimpLab.PhilosophicalMonkey\ChimpLab.PhilosophicalMonkey.xproj", "{2DF7F053-5DC9-4B85-98A6-08DD7D7B5EDB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D9F8F691-DCFC-4BFD-A89F-DD0032004813}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ChimpLab.PhilosophicalMonkey.Tests", "test\ChimpLab.PhilosophicalMonkey.Tests\ChimpLab.PhilosophicalMonkey.Tests.xproj", "{D63F444B-C97F-497A-91D1-3AA6EF6A4CCC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2DF7F053-5DC9-4B85-98A6-08DD7D7B5EDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DF7F053-5DC9-4B85-98A6-08DD7D7B5EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DF7F053-5DC9-4B85-98A6-08DD7D7B5EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DF7F053-5DC9-4B85-98A6-08DD7D7B5EDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D63F444B-C97F-497A-91D1-3AA6EF6A4CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D63F444B-C97F-497A-91D1-3AA6EF6A4CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D63F444B-C97F-497A-91D1-3AA6EF6A4CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D63F444B-C97F-497A-91D1-3AA6EF6A4CCC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2DF7F053-5DC9-4B85-98A6-08DD7D7B5EDB} = {75C104B1-D792-4433-BC2E-598F3F5C0584}
+		{D63F444B-C97F-497A-91D1-3AA6EF6A4CCC} = {D9F8F691-DCFC-4BFD-A89F-DD0032004813}
+	EndGlobalSection
+EndGlobal
