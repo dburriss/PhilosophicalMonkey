@@ -8,10 +8,21 @@ using System.Reflection;
 
 namespace ChimpLab.PhilosophicalMonkey
 {
-    // This project can output the Class library as a NuGet Package.
-    // To enable this option, right-click on the project and select the Properties menu item. In the Build tab select "Produce outputs on build".
     public static class Reflect
     {
+        public static IEnumerable<Assembly> GetAssemblies(IEnumerable<Type> types)
+        {
+            foreach (var type in types)
+            {
+#if DOTNET5_4
+                yield return type.GetTypeInfo().Assembly;
+#endif
+#if NET451
+                yield return type.Assembly;
+#endif
+            }
+        }
+
         public static T GetAttribute<T>(this MemberInfo member, bool isRequired = false) where T : Attribute
         {
             Type t = typeof(T);

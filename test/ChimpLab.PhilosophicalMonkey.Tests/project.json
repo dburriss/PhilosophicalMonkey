@@ -15,7 +15,7 @@
     "test": "xunit.runner.dnx"
   },
   "frameworks": {
-    "dnx451": {
+    "dnx46": {
       "frameworkAssemblies": {
         "System.Runtime": "",
         "System.ComponentModel.DataAnnotations": "",

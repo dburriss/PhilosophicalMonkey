@@ -4,29 +4,40 @@ using System.Reflection;
 using Xunit;
 using TestModels;
 
-using Helper = ChimpLab.PhilosophicalMonkey.Reflect;
-
+using Reflect = ChimpLab.PhilosophicalMonkey.Reflect;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ChimpLab.PhilosophicalMonkey.Tests
 {
     public class ReflectTests
     {
         [Fact]
-        public void MapDynamicToDictionary()
+        public void GetAssemblies_FromTypes_ReturnsExpectedAssemblies()
+        {
+            Type t = typeof(Address);
+            var assemblies = Reflect.GetAssemblies(new Type[] { t });
+
+            Assert.Equal(1, assemblies.Count());
+            Assert.Contains("ChimpLab.PhilosophicalMonkey.Tests", assemblies.First().FullName);
+        }
+
+        [Fact]
+        public void MapDynamicToDictionary_OnCorrectlyShapedDynamic_MapsToDictionary()
         {
             dynamic d = new { Nr = 1, Name = "Devon" };
-            var dictionary = Helper.TurnObjectIntoDictionary(d);
+            var dictionary = Reflect.TurnObjectIntoDictionary(d);
 
             Assert.Equal(2, dictionary.Keys.Count);
         }
 
         [Fact]
-        public void MapDictionaryToType()
+        public void Map_FromDictionaryToFlatType_MapsValues()
         {
             dynamic d = new { StreetNr = 1, Street = "Main Rd" };
-            var dictionary = Helper.TurnObjectIntoDictionary(d);
+            var dictionary = new Dictionary<string, object>() { { "StreetNr", 1 }, { "Street", "Main Rd" } };
             var instance = new Address();
-            Helper.Map(dictionary, instance);
+            Reflect.Map(dictionary, instance);
             Assert.Equal(instance.StreetNr, 1);
             Assert.Equal(instance.Street, "Main Rd");
         }
@@ -34,8 +45,8 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
         [Fact]
         public void GetAttribute_WithAttributePreset_ReturnsAttribute()
         {
-            var memberInfo = Helper.GetPropertyInformation(typeof(TestModel), "MyString");
-            var attribute = Helper.GetAttribute<PickMeAttribute>(memberInfo);
+            var memberInfo = Reflect.GetPropertyInformation(typeof(TestModel), "MyString");
+            var attribute = Reflect.GetAttribute<PickMeAttribute>(memberInfo);
 
             Assert.NotNull(attribute);
         }
@@ -43,16 +54,16 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
         [Fact]
         public void GetAttribute_WithoutAttributePresetAndRequired_ThrowsArgumentException()
         {
-            var memberInfo = Helper.GetPropertyInformation(typeof(TestModel), "Id");
+            var memberInfo = Reflect.GetPropertyInformation(typeof(TestModel), "Id");
 
-            Assert.Throws<ArgumentException>(() => Helper.GetAttribute<PickMeAttribute>(memberInfo, true));
+            Assert.Throws<ArgumentException>(() => Reflect.GetAttribute<PickMeAttribute>(memberInfo, true));
         }
 
         [Fact]
         public void GetPropertyInformation_FromClass_ReturnsMemberInfo()
         {
             Expression<Func<TestModel, object>> exp = x => x.MyString;
-            MemberInfo memberInfo = Helper.GetPropertyInformation<TestModel>(exp);
+            MemberInfo memberInfo = Reflect.GetPropertyInformation<TestModel>(exp);
 
             Assert.NotNull(memberInfo);
         }
@@ -60,7 +71,7 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
         [Fact]
         public void GetPropertyInformation_FromClassUsingMagicString_ReturnsMemberInfo()
         {
-            MemberInfo memberInfo = Helper.GetPropertyInformation(typeof(TestModel), "MyString");
+            MemberInfo memberInfo = Reflect.GetPropertyInformation(typeof(TestModel), "MyString");
             Assert.NotNull(memberInfo);
         }
 
@@ -68,7 +79,7 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
         public void GetPropertyName_FromClass_ReturnsPropertyNameAsString()
         {
             Expression<Func<TestModel, object>> exp = x => x.MyString;
-            string name = Helper.GetPropertyName<TestModel>(exp);
+            string name = Reflect.GetPropertyName<TestModel>(exp);
 
             Assert.Equal("MyString", name);
         }
@@ -77,7 +88,7 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
         public void GetPropertyType_FromClass_ReturnsPropertyNameAsString()
         {
             Expression<Func<TestModel, object>> exp = x => x.MyString;
-            Type t = Helper.GetPropertyType<TestModel>(exp);
+            Type t = Reflect.GetPropertyType<TestModel>(exp);
 
             Assert.Equal(typeof(string), t);
         }
@@ -92,7 +103,7 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
                 MyString = "The Value"
             };
 
-            var result = Helper.GetValue<TestModel, object>(obj, exp);
+            var result = Reflect.GetValue<TestModel, object>(obj, exp);
 
             Assert.Equal("The Value", result);
         }
@@ -107,7 +118,7 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
                 MyString = "The Value"
             };
 
-            var result = Helper.NullSafeGetValue<TestModel, object>(obj, exp, null);
+            var result = Reflect.NullSafeGetValue<TestModel, object>(obj, exp, null);
 
             Assert.Equal("The Value", result);
         }
@@ -122,7 +133,7 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
                 MyString = null
             };
 
-            var result = Helper.NullSafeGetValue<TestModel, object>(obj, exp, "Default");
+            var result = Reflect.NullSafeGetValue<TestModel, object>(obj, exp, "Default");
 
             Assert.Equal("Default", result);
         }
@@ -138,7 +149,7 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
                 CreatedAt = DateTime.MaxValue
             };
 
-            var date = Helper.NullSafeGetValue<TestModel, object>(obj, exp, DateTime.MinValue);
+            var date = Reflect.NullSafeGetValue<TestModel, object>(obj, exp, DateTime.MinValue);
 
             Assert.Equal(DateTime.MaxValue, date);
         }
@@ -158,7 +169,7 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
                 }
             };
 
-            var result = Helper.NullSafeGetValue<TestModel, object>(obj, exp, string.Empty);
+            var result = Reflect.NullSafeGetValue<TestModel, object>(obj, exp, string.Empty);
 
             Assert.Equal("Going Deep", result);
         }
@@ -178,7 +189,7 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
                 }
             };
 
-            var result = Helper.GetFullPropertyPathName<TestModel, object>(exp);
+            var result = Reflect.GetFullPropertyPathName<TestModel, object>(exp);
 
             Assert.Equal("Nested.Deep", result);
         }
@@ -186,8 +197,8 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
         [Fact]
         public void GetPropertyInfo_FromInstanceNestedPropertyUsingPathString_ReturnsPropertyInfo()
         {
-            var deepType = Helper.GetPropertyInfoFromPath<TestModel>("Nested.Deep");
-            var deepDeclaringType = Helper.GetPropertyInfoFromPath<TestModel>("Nested");
+            var deepType = Reflect.GetPropertyInfoFromPath<TestModel>("Nested.Deep");
+            var deepDeclaringType = Reflect.GetPropertyInfoFromPath<TestModel>("Nested");
 
             Assert.Equal(typeof(string), deepType.PropertyType);
             Assert.Equal(typeof(NestedModel), deepDeclaringType.PropertyType);

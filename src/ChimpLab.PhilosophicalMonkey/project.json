@@ -16,12 +16,10 @@
         "System.Threading": "4.0.11-beta-23516"
       }
     },
-
     "net451": {
-      "dependencies": {
-
-      }
+      "dependencies": { }
     }
   },
+
   "dependencies": {  }
 }
