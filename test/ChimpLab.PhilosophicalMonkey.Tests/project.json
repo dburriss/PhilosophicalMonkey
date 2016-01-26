@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-7",
+  "version": "1.0.0-rc1-update1",
   "description": "ChimpLab.PhilosophicalMonkey.Tests Class Library",
   "authors": [ "Devon Burriss" ],
   "tags": [ "reflection helper" ],
@@ -7,18 +7,15 @@
   "licenseUrl": "",
 
   "dependencies": {
-    "System.Collections": "4.0.11-beta-23225",
-    "Microsoft.CSharp": "4.0.1-beta-23225",
-    "System.Linq": "4.0.1-beta-23225",    
-    "xunit": "2.1.0-*",
-    "xunit.runner.visualstudio": "2.1.0-*",
+    "xunit": "2.1.0",
+    "xunit.runner.dnx": "2.1.0-rc1-build204",
     "ChimpLab.PhilosophicalMonkey": "1.0.0-*"
   },
   "commands": {
     "test": "xunit.runner.dnx"
   },
   "frameworks": {
-    "net451": {
+    "dnx451": {
       "frameworkAssemblies": {
         "System.Runtime": "",
         "System.ComponentModel.DataAnnotations": "",

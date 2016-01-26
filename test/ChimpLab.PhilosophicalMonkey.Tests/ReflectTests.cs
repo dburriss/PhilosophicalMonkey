@@ -12,6 +12,26 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
     public class ReflectTests
     {
         [Fact]
+        public void MapDynamicToDictionary()
+        {
+            dynamic d = new { Nr = 1, Name = "Devon" };
+            var dictionary = Helper.TurnObjectIntoDictionary(d);
+
+            Assert.Equal(2, dictionary.Keys.Count);
+        }
+
+        [Fact]
+        public void MapDictionaryToType()
+        {
+            dynamic d = new { StreetNr = 1, Street = "Main Rd" };
+            var dictionary = Helper.TurnObjectIntoDictionary(d);
+            var instance = new Address();
+            Helper.Map(dictionary, instance);
+            Assert.Equal(instance.StreetNr, 1);
+            Assert.Equal(instance.Street, "Main Rd");
+        }
+
+        [Fact]
         public void GetAttribute_WithAttributePreset_ReturnsAttribute()
         {
             var memberInfo = Helper.GetPropertyInformation(typeof(TestModel), "MyString");
