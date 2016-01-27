@@ -10,6 +10,48 @@ namespace ChimpLab.PhilosophicalMonkey
 {
     public static class Reflect
     {
+
+        private static IEnumerable<Type> GetInterfaces(Type type)
+        {
+#if DOTNET5_4
+                return type.GetTypeInfo().ImplementedInterfaces;
+#endif
+#if NET451
+            return type.GetInterfaces().AsEnumerable();
+#endif
+            throw new NotImplementedException();
+        }
+
+        private static bool IsAbstract(Type type)
+        {
+#if DOTNET5_4
+            return type.GetTypeInfo().IsAbstract;
+#endif
+#if NET451
+            return type.IsAbstract;
+#endif
+        }
+
+        private static bool IsInterface(Type type)
+        {
+#if DOTNET5_4
+            return type.GetTypeInfo().IsInterface;
+#endif
+#if NET451
+            return type.IsInterface;
+#endif
+        }
+
+        private static bool IsGenericType(Type type)
+        {
+#if DOTNET5_4
+            return type.GetTypeInfo().IsGenericType;
+#endif
+#if NET451
+            return type.IsGenericType;
+#endif
+        }
+
         public static IEnumerable<Assembly> GetAssemblies(IEnumerable<Type> types)
         {
             foreach (var type in types)

@@ -1,10 +1,10 @@
 ﻿{
-  "version": "1.0.0-rc1-update1",
-  "description": "ChimpLab.PhilosophicalMonkey Class Library",
+  "version": "0.8.0-rc1-update1",
+  "description": "I am a reflection helper that helps you reflect on the code around you.",
   "authors": [ "deebo" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
+  "tags": [ "reflection utilities dotnet core" ],
+  "projectUrl": "https://github.com/dburriss/PhilosophicalMonkey",
+  "licenseUrl": "https://github.com/dburriss/PhilosophicalMonkey/blob/master/LICENSE",
 
   "frameworks": {
     "dotnet5.4": {
@@ -21,5 +21,5 @@
     }
   },
 
-  "dependencies": {  }
+  "dependencies": { }
 }
