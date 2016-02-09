@@ -13,6 +13,26 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
     public class ReflectTests
     {
         [Fact]
+        public void GetAllExportedTypes_FromAsseblyWithPrivateClass_FetchesTypesButNotPrivateType()
+        {
+            var assembly = typeof(TestModel).GetTypeInfo().Assembly;
+            var types = Reflect.GetAllExportedTypes(new Assembly[] { assembly });
+
+            Assert.True(types.Count() > 1);
+            Assert.False(types.Any(x => x.Name == "PrivateI"));
+        }
+
+        [Fact]
+        public void GetAllTypes_FromAsseblyWithPrivateClass_FetchesPrivateTypes()
+        {
+            var assembly = typeof(TestModel).GetTypeInfo().Assembly;
+            var types = Reflect.GetAllTypes(new Assembly[] { assembly });
+
+            Assert.True(types.Count() > 1);
+            Assert.True(types.Any(x => x.Name == "PrivateI"));
+        }
+
+        [Fact]
         public void GetAssemblies_FromTypes_ReturnsExpectedAssemblies()
         {
             Type t = typeof(Address);
