@@ -17,8 +17,6 @@ The Philosophical Monkey has dozens of nugets of wisdom but here are a few examp
         Id = 1,
         MyString = null
     };
-
-    Expression<Func<TestModel, object>> exp = x => x.MyString;
     var result = Reflect.OnProperties.NullSafeGetValue<TestModel, object>(obj, x => x.MyString, "Default");
 
     Assert.Equal("Default", result);
