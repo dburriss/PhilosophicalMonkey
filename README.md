@@ -1,7 +1,7 @@
 # Philosophical Monkey
 I am a reflection helper that helps you reflect on the code around you.
 
-> An important feature of this library is it abstracts the differences between the full .NET Framework andthe new .NET Core reflection API.
+> An important feature of this library is it abstracts the differences between the full .NET Framework and the new .NET Core reflection API.
 
 # Basic Usage
 The Philosophical Monkey has dozens of nugets of wisdom but here are a few examples of how he can help.
@@ -43,7 +43,6 @@ The Philosphical Monkey has a couple topics he likes to reflect on. These includ
 * Types
 * Properties
 * Attributes
-* Methods
 * Mappings
 
 ## OnTypes
