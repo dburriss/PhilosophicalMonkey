@@ -52,6 +52,8 @@ The Philosphical Monkey has a couple topics he likes to reflect on. These includ
 * `bool IsAbstract(Type type)`
 * `bool IsInterface(Type type)`
 * `bool IsGenericType(Type type)`
+* `bool IsPrimitive(Type type)`
+* `bool IsSimple(Type type)`
 * `IEnumerable<Assembly> GetAssemblies(IEnumerable<Type> types)`
 
 ## OnProperties
@@ -73,6 +75,8 @@ The Philosphical Monkey has a couple topics he likes to reflect on. These includ
 ## OnAttributes
 ### Available Methods
 * `T GetAttribute<T>(MemberInfo member, bool isRequired = false) where T : Attribute`
+* `IEnumerable<CustomAttributeData> GetCustomAttributesData(MemberInfo memberInfo)`
+* `ConstructorInfo ConstructorInfo(CustomAttributeData attributeData)`
 
 ## OnMappings
 ### Available Methods

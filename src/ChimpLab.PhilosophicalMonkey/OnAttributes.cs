@@ -40,7 +40,7 @@ namespace ChimpLab.PhilosophicalMonkey
                 throw new NotImplementedException();
             }
 
-            public static object ConstructorInfo(CustomAttributeData attributeData)
+            public static ConstructorInfo ConstructorInfo(CustomAttributeData attributeData)
             {
 #if DOTNET5_4 || DNXCORE50
                 //TODO: check against arguments
