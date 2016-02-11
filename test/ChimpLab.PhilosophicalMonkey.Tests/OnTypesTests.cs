@@ -18,6 +18,86 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
         }
 
         [Fact]
+        public void IsGenericType_OnIEnumerableT_ReturnsTrue()
+        {
+            var t = typeof(System.Collections.Generic.IEnumerable<>);
+            var result = Reflect.OnTypes.IsGenericType(t);
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void IsGenericType_OnIEnumerable_ReturnsFalse()
+        {
+            var t = typeof(System.Collections.IEnumerable);
+            var result = Reflect.OnTypes.IsGenericType(t);
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void IsInterface_OnIEnumerable_ReturnsTrue()
+        {
+            var t = typeof(System.Collections.IEnumerable);
+            var result = Reflect.OnTypes.IsInterface(t);
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void IsInterface_OnAddress_ReturnsFalse()
+        {
+            var t = typeof(Address);
+            var result = Reflect.OnTypes.IsInterface(t);
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void IsPrimitive_OnInt_ReturnsTrue()
+        {
+            var t = typeof(int);
+            var result = Reflect.OnTypes.IsPrimitive(t);
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void IsPrimitive_OnAddress_ReturnsFalse()
+        {
+            var t = typeof(Address);
+            var result = Reflect.OnTypes.IsPrimitive(t);
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void IsSimple_OnAddress_ReturnsFalse()
+        {
+            var t = typeof(Address);
+            var result = Reflect.OnTypes.IsSimple(t);
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void IsSimple_OnLong_ReturnsTrue()
+        {
+            var t = typeof(long);
+            var result = Reflect.OnTypes.IsSimple(t);
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void IsSimple_OnString_ReturnsTrue()
+        {
+            var t = typeof(string);
+            var result = Reflect.OnTypes.IsSimple(t);
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void IsSimple_OnDateTime_ReturnsTrue()
+        {
+            var t = typeof(DateTime);
+            var result = Reflect.OnTypes.IsSimple(t);
+            Assert.True(result);
+        }
+
+        [Fact]
         public void GetAllExportedTypes_FromAsseblyWithPrivateClass_FetchesTypesButNotPrivateType()
         {
             var assembly = typeof(TestModel).GetTypeInfo().Assembly;

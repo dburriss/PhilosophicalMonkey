@@ -80,6 +80,28 @@ namespace ChimpLab.PhilosophicalMonkey
                 throw new NotImplementedException();
             }
 
+            public static bool IsPrimitive(Type type)
+            {
+#if DOTNET5_4 || DNXCORE50
+                return type.GetTypeInfo().IsPrimitive;
+#endif
+#if NET46 || NET452 || NET451 || DNX46 || DNX452 || DNX451
+            return type.IsPrimitive;
+#endif
+                throw new NotImplementedException();
+            }
+
+            public static bool IsSimple(Type type)
+            {
+#if DOTNET5_4 || DNXCORE50
+                return type.GetTypeInfo().IsPrimitive || type == typeof(string) || type == typeof(DateTime);
+#endif
+#if NET46 || NET452 || NET451 || DNX46 || DNX452 || DNX451
+            return type.IsPrimitive || type == typeof(string) || type == typeof(DateTime);
+#endif
+                throw new NotImplementedException();
+            }
+
             public static IEnumerable<Assembly> GetAssemblies(IEnumerable<Type> types)
             {
                 foreach (var type in types)
