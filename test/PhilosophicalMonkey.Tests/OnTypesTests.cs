@@ -1,11 +1,11 @@
-﻿using ChimpLab.PhilosophicalMonkey.Tests.Models;
+﻿using PhilosophicalMonkey.Tests.Models;
 using System;
 using System.Linq;
 using System.Reflection;
 using TestModels;
 using Xunit;
 
-namespace ChimpLab.PhilosophicalMonkey.Tests
+namespace PhilosophicalMonkey.Tests
 {
     public class OnTypesTests
     {
@@ -124,7 +124,7 @@ namespace ChimpLab.PhilosophicalMonkey.Tests
             var assemblies = Reflect.OnTypes.GetAssemblies(new Type[] { t });
 
             Assert.Equal(1, assemblies.Count());
-            Assert.Contains("ChimpLab.PhilosophicalMonkey.Tests", assemblies.First().FullName);
+            Assert.Contains("PhilosophicalMonkey.Tests", assemblies.First().FullName);
         }
 
         [Fact]

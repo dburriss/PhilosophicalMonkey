@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace ChimpLab.PhilosophicalMonkey
+namespace PhilosophicalMonkey
 {
     public static partial class Reflect
     {

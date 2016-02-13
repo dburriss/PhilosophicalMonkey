@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ChimpLab.PhilosophicalMonkey
+namespace PhilosophicalMonkey
 {
     public class OnMethods
     {

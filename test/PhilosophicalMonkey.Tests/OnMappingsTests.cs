@@ -2,7 +2,7 @@
 using TestModels;
 using Xunit;
 
-namespace ChimpLab.PhilosophicalMonkey.Tests
+namespace PhilosophicalMonkey.Tests
 {
     public class OnMappingsTests
     {

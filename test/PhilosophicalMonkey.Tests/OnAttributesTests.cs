@@ -3,7 +3,7 @@ using System.Linq;
 using TestModels;
 using Xunit;
 
-namespace ChimpLab.PhilosophicalMonkey.Tests
+namespace PhilosophicalMonkey.Tests
 {
     public class OnAttributesTests
     {

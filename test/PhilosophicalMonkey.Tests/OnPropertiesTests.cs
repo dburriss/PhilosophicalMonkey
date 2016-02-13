@@ -4,7 +4,7 @@ using System.Reflection;
 using TestModels;
 using Xunit;
 
-namespace ChimpLab.PhilosophicalMonkey.Tests
+namespace PhilosophicalMonkey.Tests
 {
     public class OnPropertiesTests
     {

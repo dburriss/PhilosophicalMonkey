@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace ChimpLab.PhilosophicalMonkey
+namespace PhilosophicalMonkey
 {
     public static partial class Reflect
     {

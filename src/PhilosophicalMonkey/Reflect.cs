@@ -1,4 +1,4 @@
-﻿namespace ChimpLab.PhilosophicalMonkey
+﻿namespace PhilosophicalMonkey
 {
     public static partial class Reflect
     {}

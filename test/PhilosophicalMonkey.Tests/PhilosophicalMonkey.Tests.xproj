@@ -6,8 +6,8 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>d63f444b-c97f-497a-91d1-3aa6ef6a4ccc</ProjectGuid>
-    <RootNamespace>ChimpLab.PhilosophicalMonkey.Tests</RootNamespace>
+    <ProjectGuid>837a579d-29b5-485a-8320-55bb1039e6b7</ProjectGuid>
+    <RootNamespace>PhilosophicalMonkey.Tests</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">..\..\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
   </PropertyGroup>

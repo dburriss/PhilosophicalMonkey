@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Reflection;
 
-namespace ChimpLab.PhilosophicalMonkey
+namespace PhilosophicalMonkey
 {
     public static class Extensions
     {

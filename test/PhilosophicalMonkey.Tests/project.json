@@ -1,6 +1,6 @@
 {
   "version": "1.0.0-rc1-update1",
-  "description": "ChimpLab.PhilosophicalMonkey.Tests Class Library",
+  "description": "PhilosophicalMonkey.Tests Class Library",
   "authors": [ "Devon Burriss" ],
   "tags": [ "reflection helper" ],
   "projectUrl": "",
@@ -9,7 +9,7 @@
   "dependencies": {
     "xunit": "2.1.0",
     "xunit.runner.dnx": "2.1.0-rc1-build204",
-    "ChimpLab.PhilosophicalMonkey": "0.10.0-*"
+    "PhilosophicalMonkey": "0.10.0-*"
   },
 
   "commands": {
