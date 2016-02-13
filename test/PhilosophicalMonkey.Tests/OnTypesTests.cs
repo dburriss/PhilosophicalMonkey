@@ -10,6 +10,22 @@ namespace PhilosophicalMonkey.Tests
     public class OnTypesTests
     {
         [Fact]
+        public void IsClass_OnClass_ReturnsTrue()
+        {
+            var t = typeof(MyAbstract);
+            var result = Reflect.OnTypes.IsClass(t);
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void IsClass_OnInterface_ReturnsFalse()
+        {
+            var t = typeof(IInterface);
+            var result = Reflect.OnTypes.IsClass(t);
+            Assert.False(result);
+        }
+
+        [Fact]
         public void IsAbstract_OnAbstractType_ReturnsTrue()
         {
             var t = typeof(MyAbstract);

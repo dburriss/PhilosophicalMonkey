@@ -69,6 +69,17 @@ namespace PhilosophicalMonkey
                 throw new NotImplementedException();
             }
 
+            public static bool IsClass(Type type)
+            {
+#if DOTNET5_4 || DNXCORE50
+                return type.GetTypeInfo().IsClass;
+#endif
+#if NET46 || NET452 || NET451 || DNX46 || DNX452 || DNX451
+            return type.IsClass;
+#endif
+                throw new NotImplementedException();
+            }
+
             public static bool IsGenericType(Type type)
             {
 #if DOTNET5_4 || DNXCORE50
@@ -106,13 +117,18 @@ namespace PhilosophicalMonkey
             {
                 foreach (var type in types)
                 {
+                    yield return GetAssembly(type);
+                }
+            }
+
+            public static Assembly GetAssembly(Type type)
+            {
 #if DOTNET5_4
-                    yield return type.GetTypeInfo().Assembly;
+                return type.GetTypeInfo().Assembly;
 #endif
 #if NET46 || NET452 || NET451 || DNX46 || DNX452 || DNX451
-                yield return type.Assembly;
+                return type.Assembly;
 #endif
-                }
             }
         }
     

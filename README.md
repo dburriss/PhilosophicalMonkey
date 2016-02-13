@@ -54,11 +54,13 @@ The Philosphical Monkey has a couple topics he likes to reflect on. These includ
 * `Type[] GetAllTypes(IEnumerable<Assembly> assemblies)`
 * `IEnumerable<Type> GetInterfaces(Type type)`
 * `bool IsAbstract(Type type)`
+* `bool ISClass(Type type)`
 * `bool IsInterface(Type type)`
 * `bool IsGenericType(Type type)`
 * `bool IsPrimitive(Type type)`
 * `bool IsSimple(Type type)`
 * `IEnumerable<Assembly> GetAssemblies(IEnumerable<Type> types)`
+* `Assembly GetAssembly(Type type)`
 
 ## OnProperties
 ### Available Methods
