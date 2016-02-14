@@ -10,35 +10,46 @@ I am a reflection helper that helps you reflect on the code around you.
 
 The Philosophical Monkey has dozens of nugets of wisdom but here are a few examples of how he can help.
 ### Getting all types from a namespace
-    var assembly = typeof(TestModel).GetTypeInfo().Assembly;
-    var types = Reflect.OnTypes.GetTypesFromNamespace(assembly, "TestModels");
-    
-    Assert.Contains(types, t => t == typeof(TestModel));
-    
-### Get a null safe property value
-    var obj = new TestModel
-    {
-        Id = 1,
-        MyString = null
-    };
-    var result = Reflect.OnProperties.NullSafeGetValue<TestModel, object>(obj, x => x.MyString, "Default");
 
-    Assert.Equal("Default", result);
+```csharp
+var assembly = typeof(TestModel).GetTypeInfo().Assembly;
+var types = Reflect.OnTypes.GetTypesFromNamespace(assembly, "TestModels");
+
+Assert.Contains(types, t => t == typeof(TestModel));
+```
+
+### Get a null safe property value
+
+```csharp
+var obj = new TestModel
+{
+    Id = 1,
+    MyString = null
+};
+var result = Reflect.OnProperties.NullSafeGetValue<TestModel, object>(obj, x => x.MyString, "Default");
+
+Assert.Equal("Default", result);
+```
 
 ### Mapping a dynamic to a dictionary
-    dynamic d = new { Nr = 1, Name = "Devon" };
-    var dictionary = Reflect.OnMappings.TurnObjectIntoDictionary(d);
 
-    Assert.Equal(2, dictionary.Keys.Count);
-    
+```csharp
+dynamic d = new { Nr = 1, Name = "Devon" };
+var dictionary = Reflect.OnMappings.TurnObjectIntoDictionary(d);
+
+Assert.Equal(2, dictionary.Keys.Count);
+```
+
 Or fill object properties:
 
-    dynamic d = new { StreetNr = 1, Street = "Main Rd" };
-    var dictionary = new Dictionary<string, object>() { { "StreetNr", 1 }, { "Street", "Main Rd" } };
-    var instance = new Address();
-    Reflect.OnMappings.Map(dictionary, instance);
-    Assert.Equal(instance.StreetNr, 1);
-    Assert.Equal(instance.Street, "Main Rd");
+```csharp
+dynamic d = new { StreetNr = 1, Street = "Main Rd" };
+var dictionary = new Dictionary<string, object>() { { "StreetNr", 1 }, { "Street", "Main Rd" } };
+var instance = new Address();
+Reflect.OnMappings.Map(dictionary, instance);
+Assert.Equal(instance.StreetNr, 1);
+Assert.Equal(instance.Street, "Main Rd");
+```
 
 # Overview
 The Philosphical Monkey has a couple topics he likes to reflect on. These include:
