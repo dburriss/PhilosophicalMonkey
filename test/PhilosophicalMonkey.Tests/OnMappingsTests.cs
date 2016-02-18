@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TestModels;
 using Xunit;
 
@@ -15,7 +16,53 @@ namespace PhilosophicalMonkey.Tests
 
             Assert.Equal(2, dictionary.Keys.Count);
         }
-
+        [Fact]
+        public void MapComplexTypeToDictionary_OnAnyComplexType_MapsToDictionary()
+        {
+            var complexPerson = new Person() {
+                Name = "Complex",
+                DOB = DateTime.Now,
+                Address = new Address()
+                {
+                    Street ="Complex Street",
+                    StreetNr = 1
+                }
+            };
+            var dictionary = Reflect.OnMappings.TurnObjectIntoDictionary(complexPerson);
+            Assert.IsType<Dictionary<string,object>>(dictionary);
+        }
+        [Fact]
+        public void MapComplexTypeToDictionary_OnAnyComplexType_MapsSubTypesToDictionary()
+        {
+            var complexPerson = new Person()
+            {
+                Name = "Complex",
+                DOB = DateTime.Now,
+                Address = new Address()
+                {
+                    Street = "Complex Street",
+                    StreetNr = 1
+                }
+            };
+            var dictionary = Reflect.OnMappings.TurnObjectIntoDictionary(complexPerson);
+            Assert.IsType<Dictionary<string, object>>(dictionary[nameof(Address)]);
+        }
+        [Fact]
+        public void MapComplexTypeToDictionary_OnAnyComplexType_SubDictionaryKeyCountEqualsTwo()
+        {
+            var complexPerson = new Person()
+            {
+                Name = "Complex",
+                DOB = DateTime.Now,
+                Address = new Address()
+                {
+                    Street = "Complex Street",
+                    StreetNr = 1
+                }
+            };
+            var dictionary = Reflect.OnMappings.TurnObjectIntoDictionary(complexPerson);
+            Assert.Equal(((Dictionary<string,object>)dictionary[nameof(Address)]).Keys.Count,2);
+        }
         [Fact]
         public void Map_FromDictionaryToFlatType_MapsValues()
         {

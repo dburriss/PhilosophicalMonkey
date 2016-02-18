@@ -33,7 +33,10 @@ namespace PhilosophicalMonkey
                 {
                     if (prop.CanRead)
                     {
-                        dict.Add(prop.Name, prop.GetValue(data, null));
+                        if (OnTypes.IsClass(prop.GetValue(data).GetType()) && !OnTypes.IsSimple(prop.GetValue(data).GetType()))
+                            dict.Add(prop.Name, TurnObjectIntoDictionary(prop.GetValue(data)));
+                        else
+                            dict.Add(prop.Name, prop.GetValue(data, null));
                     }
                 }
                 return dict;
