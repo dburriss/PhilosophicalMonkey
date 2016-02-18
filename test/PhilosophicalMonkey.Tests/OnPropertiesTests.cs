@@ -13,7 +13,7 @@ namespace PhilosophicalMonkey.Tests
         public void GetPropertyInformation_FromClass_ReturnsMemberInfo()
         {
             Expression<Func<TestModel, object>> exp = x => x.MyString;
-            MemberInfo memberInfo = Reflect.OnProperties.GetPropertyInformation<TestModel>(exp);
+            MemberInfo memberInfo = Reflect.OnProperties.GetMemberInformation<TestModel>(exp);
 
             Assert.NotNull(memberInfo);
         }
@@ -152,6 +152,27 @@ namespace PhilosophicalMonkey.Tests
 
             Assert.Equal(typeof(string), deepType.PropertyType);
             Assert.Equal(typeof(NestedModel), deepDeclaringType.PropertyType);
+        }
+
+
+        [Fact]
+        public void Set_PublicProperty_SetsProperty()
+        {
+            var model = new TestModel();
+            Reflect.OnProperties.SetProperty<TestModel>(model, x => x.Id, 5);
+            Reflect.OnProperties.SetProperty<TestModel>(model, x => x.MyString, "Bob");
+
+            Assert.Equal(5, model.Id);
+            Assert.Equal("Bob", model.MyString);
+        }
+
+        [Fact]
+        public void Set_ProtectedProperty_SetsProperty()
+        {
+            var model = new TestModel();
+            Reflect.OnProperties.SetProperty<TestModel>(model, x => x.President, "Clinton");
+
+            Assert.Equal("Clinton", model.President);
         }
 
         //http://stackoverflow.com/questions/238765/given-a-type-expressiontype-memberaccess-how-do-i-get-the-field-value

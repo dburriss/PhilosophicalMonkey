@@ -9,7 +9,7 @@
   "dependencies": {
     "xunit": "2.1.0",
     "xunit.runner.dnx": "2.1.0-rc1-build204",
-    "PhilosophicalMonkey": "0.10.0-*"
+    "PhilosophicalMonkey": "0.12.0-*"
   },
 
   "commands": {

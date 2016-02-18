@@ -77,8 +77,8 @@ The Philosphical Monkey has a couple topics he likes to reflect on. These includ
 ### Available Methods
 * `string GetPropertyName<T>(Expression<Func<T, object>> expression)`
 * `GetPropertyType<T>(Expression<Func<T, object>> expression)`
-* `MemberInfo GetPropertyInformation<T>(Expression<Func<T, object>> propertyExpression)`
-* `MemberInfo PropertyInformation(Expression propertyExpression)`
+* `MemberInfo GetMemberInformation<T>(Expression<Func<T, object>> propertyExpression)`
+* `MemberInfo GetMemberInformation(Expression propertyExpression)`
 * `MemberInfo GetMemberInformation(Type type, string propertyName)`
 * `PropertyInfo GetPropertyInformation(Type type, string propertyName)`
 * `PropertyInfo GetPropertyInfoFromPath<T>(string path)`

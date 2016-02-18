@@ -32,6 +32,7 @@ namespace TestModels
     public class TestModel : Base
     {
         public int Id { get; set; }
+        public string President { get; protected set; }
 
         [PickMe]
         public string MyString { get; set; }

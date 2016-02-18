@@ -24,16 +24,18 @@ namespace PhilosophicalMonkey
 
             public static Type GetPropertyType<T>(Expression<Func<T, object>> expression)
             {
-                var info = GetPropertyInformation(expression) as PropertyInfo;
+                var memberInfo = GetMemberInformation(expression);
+                var info = memberInfo as PropertyInfo;
                 return info.PropertyType;
             }
 
-            public static MemberInfo GetPropertyInformation<T>(Expression<Func<T, object>> propertyExpression)
+            public static MemberInfo GetMemberInformation<T>(Expression<Func<T, object>> propertyExpression)
             {
-                return PropertyInformation(propertyExpression.Body);
+                var memberInformation = GetMemberInformation(propertyExpression.Body);
+                return memberInformation;
             }
 
-            public static MemberInfo PropertyInformation(Expression propertyExpression)
+            public static MemberInfo GetMemberInformation(Expression propertyExpression)
             {
                 MemberExpression memberExpr = propertyExpression as MemberExpression;
                 if (memberExpr == null)
@@ -62,7 +64,12 @@ namespace PhilosophicalMonkey
 
             public static PropertyInfo GetPropertyInformation(Type type, string propertyName)
             {
-                return type.GetRuntimeProperties().FirstOrDefault(p => p.Name == propertyName);
+                if (type == null)
+                    return null;
+                var runTimeProps = type.GetRuntimeProperties();
+                if(runTimeProps.Any())
+                    return runTimeProps.FirstOrDefault(p => p.Name == propertyName);
+                return null;
             }
 
             public static PropertyInfo GetPropertyInfoFromPath<T>(string path)
@@ -119,6 +126,27 @@ namespace PhilosophicalMonkey
             {
                 string fullPropertyPathName = GetFullPropertyPathName(expression);
                 return GetNestedPropertyValue(fullPropertyPathName, source);
+            }
+
+            public static void SetProperty<TModel>(TModel instance, Expression<Func<TModel, object>> exp, object value)
+            {
+                var propertyName = GetPropertyName(exp);
+                SetProperty(instance, propertyName, value);
+            }
+
+            public static void SetProperty<TModel>(TModel instance, string propertyName, object value)
+            {
+                var info = GetPropertyInformation(instance.GetType(), propertyName);
+
+                var setMethod = info.GetSetMethod();
+                if (setMethod != null)
+                {
+                    setMethod.Invoke(instance, new object[] { value });
+                }
+                else
+                {
+                    info.SetValue(instance, value);
+                }                
             }
 
             public static object GetNestedPropertyValue(string name, object obj)
