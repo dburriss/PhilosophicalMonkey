@@ -16,6 +16,7 @@ namespace PhilosophicalMonkey.Tests
 
             Assert.Equal(2, dictionary.Keys.Count);
         }
+
         [Fact]
         public void MapComplexTypeToDictionary_OnAnyComplexType_MapsToDictionary()
         {
@@ -31,6 +32,7 @@ namespace PhilosophicalMonkey.Tests
             var dictionary = Reflect.OnMappings.TurnObjectIntoDictionary(complexPerson);
             Assert.IsType<Dictionary<string,object>>(dictionary);
         }
+
         [Fact]
         public void MapComplexTypeToDictionary_OnAnyComplexType_MapsSubTypesToDictionary()
         {
@@ -45,8 +47,9 @@ namespace PhilosophicalMonkey.Tests
                 }
             };
             var dictionary = Reflect.OnMappings.TurnObjectIntoDictionary(complexPerson);
-            Assert.IsType<Dictionary<string, object>>(dictionary[nameof(Address)]);
+            Assert.IsType<Dictionary<string, object>>(dictionary["Address"]);
         }
+
         [Fact]
         public void MapComplexTypeToDictionary_OnAnyComplexType_SubDictionaryKeyCountEqualsTwo()
         {
@@ -61,8 +64,9 @@ namespace PhilosophicalMonkey.Tests
                 }
             };
             var dictionary = Reflect.OnMappings.TurnObjectIntoDictionary(complexPerson);
-            Assert.Equal(((Dictionary<string,object>)dictionary[nameof(Address)]).Keys.Count,2);
+            Assert.Equal(((Dictionary<string,object>)dictionary["Address"]).Keys.Count, 2);
         }
+
         [Fact]
         public void Map_FromDictionaryToFlatType_MapsValues()
         {

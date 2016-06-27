@@ -76,6 +76,7 @@ The Philosphical Monkey has a couple topics he likes to reflect on. These includ
 ## OnProperties
 ### Available Methods
 * `string GetPropertyName<T>(Expression<Func<T, object>> expression)`
+* `string TypeSafeGetPropertyName<TInput, TResult>(Expression<Func<TInput, TResult>> expression)`
 * `GetPropertyType<T>(Expression<Func<T, object>> expression)`
 * `MemberInfo GetMemberInformation<T>(Expression<Func<T, object>> propertyExpression)`
 * `MemberInfo GetMemberInformation(Expression propertyExpression)`
@@ -88,6 +89,8 @@ The Philosphical Monkey has a couple topics he likes to reflect on. These includ
 * `string GetFullPropertyPathName<TSource, TResult>(Expression<Func<TSource, TResult>> expression)`
 * `object GetValue<TSource, TResult>(TSource source, Expression<Func<TSource, TResult>> expression)`
 * `object GetNestedPropertyValue(string name, object obj)`
+* `void SetProperty<TModel>(TModel instance, Expression<Func<TModel, object>> exp, object value)`
+* `void TypeSafeSetProperty<TModel, TPropertyType>(TModel instance, Expression<Func<TModel, TPropertyType>> exp, TPropertyType value)`
 
 ## OnAttributes
 ### Available Methods

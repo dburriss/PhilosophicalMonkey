@@ -35,6 +35,15 @@ namespace PhilosophicalMonkey.Tests
         }
 
         [Fact]
+        public void TypeSafeGetPropertyName_FromClass_ReturnsPropertyNameAsString()
+        {
+            Expression<Func<TestModel, string>> exp = x => x.MyString;
+            string name = Reflect.OnProperties.TypeSafeGetPropertyName<TestModel, string>(exp);
+
+            Assert.Equal("MyString", name);
+        }
+
+        [Fact]
         public void GetPropertyType_FromClass_ReturnsPropertyNameAsString()
         {
             Expression<Func<TestModel, object>> exp = x => x.MyString;
@@ -156,7 +165,7 @@ namespace PhilosophicalMonkey.Tests
 
 
         [Fact]
-        public void Set_PublicProperty_SetsProperty()
+        public void SetProperty_PublicProperty_SetsProperty()
         {
             var model = new TestModel();
             Reflect.OnProperties.SetProperty<TestModel>(model, x => x.Id, 5);
@@ -167,12 +176,23 @@ namespace PhilosophicalMonkey.Tests
         }
 
         [Fact]
-        public void Set_ProtectedProperty_SetsProperty()
+        public void SetProperty_ProtectedProperty_SetsProperty()
         {
             var model = new TestModel();
             Reflect.OnProperties.SetProperty<TestModel>(model, x => x.President, "Clinton");
 
             Assert.Equal("Clinton", model.President);
+        }
+
+        [Fact]
+        public void TypeSafeSetProperty_PublicTypeSafeProperty_SetsProperty()
+        {
+            var model = new TestModel();
+            Reflect.OnProperties.TypeSafeSetProperty<TestModel, int>(model, x => x.Id, 5);
+            Reflect.OnProperties.TypeSafeSetProperty<TestModel, string>(model, x => x.MyString, "Bob");
+
+            Assert.Equal(5, model.Id);
+            Assert.Equal("Bob", model.MyString);
         }
 
         //http://stackoverflow.com/questions/238765/given-a-type-expressiontype-memberaccess-how-do-i-get-the-field-value

@@ -12,6 +12,11 @@ namespace PhilosophicalMonkey
         {
             public static string GetPropertyName<T>(Expression<Func<T, object>> expression)
             {
+                return TypeSafeGetPropertyName(expression);
+            }
+
+            public static string TypeSafeGetPropertyName<TInput, TResult>(Expression<Func<TInput, TResult>> expression)
+            {
                 var body = expression.Body as MemberExpression;
 
                 if (body == null)
@@ -147,6 +152,12 @@ namespace PhilosophicalMonkey
                 {
                     info.SetValue(instance, value);
                 }                
+            }
+
+            public static void TypeSafeSetProperty<TModel, TPropertyType>(TModel instance, Expression<Func<TModel, TPropertyType>> exp, TPropertyType value)
+            {
+                var propertyName = TypeSafeGetPropertyName(exp);
+                SetProperty(instance, propertyName, value);
             }
 
             public static object GetNestedPropertyValue(string name, object obj)

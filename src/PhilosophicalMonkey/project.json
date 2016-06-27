@@ -1,11 +1,12 @@
 ﻿{
-  "version": "0.13.0-rc1-update1",
+  "version": "0.14.0",
   "description": "I am a reflection helper that helps you reflect on the code around you.",
   "authors": [ "Devon Burriss" ],
-  "tags": [ "reflection utilities dotnet core" ],
-  "projectUrl": "https://github.com/dburriss/PhilosophicalMonkey",
-  "licenseUrl": "https://github.com/dburriss/PhilosophicalMonkey/blob/master/LICENSE",
-
+  "packOptions": {
+    "tags": [ "reflection utilities dotnet core" ],
+    "projectUrl": "https://github.com/dburriss/PhilosophicalMonkey",
+    "licenseUrl": "https://github.com/dburriss/PhilosophicalMonkey/blob/master/LICENSE"
+  },
   "frameworks": {
     "dotnet5.4": {
       "dependencies": {
