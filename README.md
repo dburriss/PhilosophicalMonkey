@@ -1,5 +1,10 @@
 # Philosophical Monkey
 
+| DEV |MASTER|VERSION|
+|-----|------|-------|
+|[![Build status](https://ci.appveyor.com/api/projects/status/05drr0dq7omoru07?svg=true)](https://ci.appveyor.com/project/dburriss/philosophicalmonkey)|[![Master Build status](https://ci.appveyor.com/api/projects/status/pmgou6qm452s50d0/branch/master?svg=true)](https://ci.appveyor.com/project/dburriss/philosophicalmonkey/branch/master)|[![MyGet CI](https://img.shields.io/myget/dburriss-ci/v/PhilosophicalMonkey.svg)](http://myget.org/gallery/dburriss-ci)|
+ 
+
 I am a reflection helper that helps you reflect on the code around you.
 
 > An important feature of this library is it abstracts the differences between the full .NET Framework and the new .NET Core reflection API.
