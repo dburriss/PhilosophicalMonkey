@@ -71,7 +71,7 @@ namespace PhilosophicalMonkey
             {
                 if (type == null)
                     return null;
-                var runTimeProps = type.GetRuntimeProperties();
+                var runTimeProps = type.GetRuntimeProperties().ToList();
                 if(runTimeProps.Any())
                     return runTimeProps.FirstOrDefault(p => p.Name == propertyName);
                 return null;

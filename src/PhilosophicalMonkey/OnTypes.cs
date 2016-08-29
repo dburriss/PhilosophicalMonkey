@@ -38,10 +38,10 @@ namespace PhilosophicalMonkey
 
             public static IEnumerable<Type> GetInterfaces(Type type)
             {
-#if DOTNET5_4 || DNXCORE50
+#if COREFX
                 return type.GetTypeInfo().ImplementedInterfaces;
 #endif
-#if NET46 || NET452 || NET451 || DNX46 || DNX452 || DNX451
+#if NET
             return type.GetInterfaces().AsEnumerable();
 #endif
                 throw new NotImplementedException();
@@ -49,66 +49,66 @@ namespace PhilosophicalMonkey
 
             public static bool IsAbstract(Type type)
             {
-#if DOTNET5_4 || DNXCORE50
+#if COREFX
                 return type.GetTypeInfo().IsAbstract;
 #endif
-#if NET46 || NET452 || NET451 || DNX46 || DNX452 || DNX451
-            return type.IsAbstract;
+#if NET
+                return type.IsAbstract;
 #endif
                 throw new NotImplementedException();
             }
 
             public static bool IsInterface(Type type)
             {
-#if DOTNET5_4 || DNXCORE50
+#if COREFX
                 return type.GetTypeInfo().IsInterface;
 #endif
-#if NET46 || NET452 || NET451 || DNX46 || DNX452 || DNX451
-            return type.IsInterface;
+#if NET
+                return type.IsInterface;
 #endif
                 throw new NotImplementedException();
             }
 
             public static bool IsClass(Type type)
             {
-#if DOTNET5_4 || DNXCORE50
+#if COREFX
                 return type.GetTypeInfo().IsClass;
 #endif
-#if NET46 || NET452 || NET451 || DNX46 || DNX452 || DNX451
-            return type.IsClass;
+#if NET
+                return type.IsClass;
 #endif
                 throw new NotImplementedException();
             }
 
             public static bool IsGenericType(Type type)
             {
-#if DOTNET5_4 || DNXCORE50
+#if COREFX
                 return type.GetTypeInfo().IsGenericType;
 #endif
-#if NET46 || NET452 || NET451 || DNX46 || DNX452 || DNX451
-            return type.IsGenericType;
+#if NET
+                return type.IsGenericType;
 #endif
                 throw new NotImplementedException();
             }
 
             public static bool IsPrimitive(Type type)
             {
-#if DOTNET5_4 || DNXCORE50
+#if COREFX
                 return type.GetTypeInfo().IsPrimitive;
 #endif
-#if NET46 || NET452 || NET451 || DNX46 || DNX452 || DNX451
-            return type.IsPrimitive;
+#if NET
+                return type.IsPrimitive;
 #endif
                 throw new NotImplementedException();
             }
 
             public static bool IsSimple(Type type)
             {
-#if DOTNET5_4 || DNXCORE50
+#if COREFX
                 return type.GetTypeInfo().IsPrimitive || type == typeof(string) || type == typeof(DateTime);
 #endif
-#if NET46 || NET452 || NET451 || DNX46 || DNX452 || DNX451
-            return type.IsPrimitive || type == typeof(string) || type == typeof(DateTime);
+#if NET
+                return type.IsPrimitive || type == typeof(string) || type == typeof(DateTime);
 #endif
                 throw new NotImplementedException();
             }
@@ -123,12 +123,13 @@ namespace PhilosophicalMonkey
 
             public static Assembly GetAssembly(Type type)
             {
-#if DOTNET5_4
+#if COREFX
                 return type.GetTypeInfo().Assembly;
 #endif
-#if NET46 || NET452 || NET451 || DNX46 || DNX452 || DNX451
+#if NET
                 return type.Assembly;
 #endif
+                throw new NotImplementedException();
             }
         }
     

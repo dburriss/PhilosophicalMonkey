@@ -8,7 +8,12 @@ namespace TestModels
     {
         public string Name { get; set; }
 
+#if COREFX
         [Display(Name="Date of Birth")]
+#endif
+#if NET
+        [Display(Name = "Date of Birth")]
+#endif
         public DateTime DOB { get; set; }
         public Address Address { get; set; }
 

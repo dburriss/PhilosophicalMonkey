@@ -1,5 +1,4 @@
-﻿using PhilosophicalMonkey.Tests.Models;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using TestModels;
@@ -134,13 +133,13 @@ namespace PhilosophicalMonkey.Tests
         }
 
         [Fact]
-        public void GetAssemblies_FromTypes_ReturnsExpectedAssemblies()
+        public void GetAssemblies_FromTypes_ReturnsTestModelsAssembly()
         {
             Type t = typeof(Address);
-            var assemblies = Reflect.OnTypes.GetAssemblies(new Type[] { t });
+            var assemblies = Reflect.OnTypes.GetAssemblies(new Type[] { t }).ToList();
 
             Assert.Equal(1, assemblies.Count());
-            Assert.Contains("PhilosophicalMonkey.Tests", assemblies.First().FullName);
+            Assert.Contains("TestModels", assemblies.First().FullName);
         }
 
         [Fact]

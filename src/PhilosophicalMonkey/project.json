@@ -1,26 +1,31 @@
 ﻿{
-  "version": "0.14.0",
-  "description": "I am a reflection helper that helps you reflect on the code around you.",
+  "version": "1.0.0",
+  "description": "I am a reflection helper that helps you reflect on the code around you. Provides a standard interface for common reflection tasks that works acorss .NET full framework and .NET Core.",
   "authors": [ "Devon Burriss" ],
   "packOptions": {
     "tags": [ "reflection utilities dotnet core" ],
     "projectUrl": "https://github.com/dburriss/PhilosophicalMonkey",
     "licenseUrl": "https://github.com/dburriss/PhilosophicalMonkey/blob/master/LICENSE"
   },
+
   "frameworks": {
-    "dotnet5.4": {
-      "dependencies": {
-        "Microsoft.CSharp": "4.0.1-beta-23516",
-        "System.Collections": "4.0.11-beta-23516",
-        "System.Linq": "4.0.1-beta-23516",
-        "System.Runtime": "4.0.21-beta-23516",
-        "System.Threading": "4.0.11-beta-23516"
-      }
-    },
     "net451": {
-      "dependencies": { }
+      "buildOptions": { "define": ["NET"] }
+    },
+    "netstandard1.6": {
+      "buildOptions": { "define": ["COREFX"] },
+      "imports": "dotnet5.4",
+      "dependencies": {
+        "Microsoft.CSharp": "4.0.1",
+        "System.Reflection.TypeExtensions": "4.1.0"
+      }
     }
   },
 
-  "dependencies": { }
+  "dependencies": {
+    "System.Globalization": "4.0.11",
+    "System.Linq": "4.1.0",
+    "System.Reflection.Extensions": "4.0.1",
+    "System.Runtime.Extensions": "4.1.0"
+  }
 }

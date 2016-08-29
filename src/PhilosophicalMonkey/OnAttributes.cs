@@ -30,11 +30,11 @@ namespace PhilosophicalMonkey
             public static IEnumerable<CustomAttributeData> GetCustomAttributesData(MemberInfo memberInfo)
             {
 
-#if DOTNET5_4 || DNXCORE50
+#if COREFX
                 return memberInfo.CustomAttributes;
 #endif
 
-#if NET46 || NET452 || NET451 || DNX46 || DNX452 || DNX451
+#if NET
                 return memberInfo.GetCustomAttributesData();
 #endif
                 throw new NotImplementedException();
@@ -42,12 +42,12 @@ namespace PhilosophicalMonkey
 
             public static ConstructorInfo ConstructorInfo(CustomAttributeData attributeData)
             {
-#if DOTNET5_4 || DNXCORE50
+#if COREFX
                 //TODO: check against arguments
                 return attributeData.AttributeType.GetTypeInfo().DeclaredConstructors.First();
 #endif
 
-#if NET46 || NET452 || NET451 || DNX46 || DNX452 || DNX451
+#if NET
                 return attributeData.Constructor;
 #endif
                 throw new NotImplementedException();

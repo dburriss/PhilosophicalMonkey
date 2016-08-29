@@ -1,4 +1,4 @@
-﻿namespace PhilosophicalMonkey.Tests.Models
+﻿namespace TestModels
 {
     public abstract class MyAbstract
     {

@@ -1,15 +1,18 @@
 # Philosophical Monkey
+
 I am a reflection helper that helps you reflect on the code around you.
 
 > An important feature of this library is it abstracts the differences between the full .NET Framework and the new .NET Core reflection API.
 
 ## Install from nuget
-> `Install-Package PhilosophicalMonkey -Pre`
 
-# Basic Usage
+> `Install-Package PhilosophicalMonkey`
+
+## Basic Usage
 
 The Philosophical Monkey has dozens of nugets of wisdom but here are a few examples of how he can help.
-### Getting all types from a namespace
+
+## Getting all types from a namespace
 
 ```csharp
 var assembly = typeof(TestModel).GetTypeInfo().Assembly;
@@ -18,7 +21,7 @@ var types = Reflect.OnTypes.GetTypesFromNamespace(assembly, "TestModels");
 Assert.Contains(types, t => t == typeof(TestModel));
 ```
 
-### Get a null safe property value
+## Get a null safe property value
 
 ```csharp
 var obj = new TestModel
@@ -51,15 +54,17 @@ Assert.Equal(instance.StreetNr, 1);
 Assert.Equal(instance.Street, "Main Rd");
 ```
 
-# Overview
+## Overview
+
 The Philosphical Monkey has a couple topics he likes to reflect on. These include:
+
 * Types
 * Properties
 * Attributes
 * Mappings
 
-## OnTypes
-### Available Methods
+### OnTypes
+
 * `IEnumerable<Type> GetTypesFromNamespace(Assembly assembly, params string[] @namespaces)`
 * `Type[] GetAllExportedTypes(IEnumerable<Assembly> assemblies)`
 * `Type[] GetAllTypes(IEnumerable<Assembly> assemblies)`
@@ -73,8 +78,8 @@ The Philosphical Monkey has a couple topics he likes to reflect on. These includ
 * `IEnumerable<Assembly> GetAssemblies(IEnumerable<Type> types)`
 * `Assembly GetAssembly(Type type)`
 
-## OnProperties
-### Available Methods
+### OnProperties
+
 * `string GetPropertyName<T>(Expression<Func<T, object>> expression)`
 * `string TypeSafeGetPropertyName<TInput, TResult>(Expression<Func<TInput, TResult>> expression)`
 * `GetPropertyType<T>(Expression<Func<T, object>> expression)`
@@ -92,13 +97,13 @@ The Philosphical Monkey has a couple topics he likes to reflect on. These includ
 * `void SetProperty<TModel>(TModel instance, Expression<Func<TModel, object>> exp, object value)`
 * `void TypeSafeSetProperty<TModel, TPropertyType>(TModel instance, Expression<Func<TModel, TPropertyType>> exp, TPropertyType value)`
 
-## OnAttributes
-### Available Methods
+### OnAttributes
+
 * `T GetAttribute<T>(MemberInfo member, bool isRequired = false) where T : Attribute`
 * `IEnumerable<CustomAttributeData> GetCustomAttributesData(MemberInfo memberInfo)`
 * `ConstructorInfo ConstructorInfo(CustomAttributeData attributeData)`
 
-## OnMappings
-### Available Methods
+### OnMappings
+
 * `void Map<T>(IDictionary<string, object> dictionary, T instance)`
 * `IDictionary<string, object> TurnObjectIntoDictionary(object data)`

@@ -1,0 +1,6 @@
+﻿namespace TestModels
+{
+    class PrivateI
+    {
+    }
+}
