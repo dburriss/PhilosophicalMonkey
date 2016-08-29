@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
 
 namespace PhilosophicalMonkey
@@ -10,13 +9,7 @@ namespace PhilosophicalMonkey
         public static T GetAttribute<T>(this MemberInfo member, bool isRequired = false) where T : Attribute
         {
             Type t = typeof(T);
-
-#if COREFX
             var attribute = member.GetCustomAttribute(t, false);
-#endif
-#if NET
-            var attribute = member.GetCustomAttribute(t, false);
-#endif
 
             if (attribute == null && isRequired)
             {
