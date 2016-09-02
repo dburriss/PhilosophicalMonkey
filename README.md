@@ -82,6 +82,8 @@ The Philosphical Monkey has a couple topics he likes to reflect on. These includ
 * `bool IsSimple(Type type)`
 * `IEnumerable<Assembly> GetAssemblies(IEnumerable<Type> types)`
 * `Assembly GetAssembly(Type type)`
+* `bool bool IsAssignable(Type concretion, Type abstraction)`
+* `IEnumerable<Type> GetGenericArguments(Type type)`
 
 ### OnProperties
 
