@@ -131,6 +131,30 @@ namespace PhilosophicalMonkey
 #endif
                 throw new NotImplementedException();
             }
+
+            public static bool IsAssignable(Type concretion, Type abstraction)
+            {
+#if COREFX
+                return abstraction.GetTypeInfo().IsAssignableFrom(concretion);
+#endif
+#if NET
+                return abstraction.IsAssignableFrom(concretion);
+#endif
+                throw new NotImplementedException();
+            }
+
+
+            public static IEnumerable<Type> GetGenericArguments(Type type)
+            {
+#if COREFX
+                return type.GetGenericArguments();
+#endif
+#if NET
+                return type.GetGenericArguments();
+#endif
+                throw new NotImplementedException();
+            }
+
         }
     
     }
