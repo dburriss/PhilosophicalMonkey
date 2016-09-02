@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using TestModels;
@@ -151,5 +152,40 @@ namespace PhilosophicalMonkey.Tests
             Assert.Contains(types, t => t == typeof(TestModel));
         }
 
+        [Fact]
+        public void IsAssignableFrom_TypeNotInInheritance_ReturnsFalse()
+        {
+            var abstraction = typeof(IInterface);
+            var concretion = typeof(Address);
+            var result = Reflect.OnTypes.IsAssignable(concretion, abstraction);
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void IsAssignableFrom_TypeIsInInheritance_ReturnsTrue()
+        {
+            var abstraction = typeof(IInterface);
+            var concretion = typeof(Person);
+            var result = Reflect.OnTypes.IsAssignable(concretion, abstraction);
+            Assert.True(result);
+        }
+
+        
+        [Fact]
+        public void GetGenericArguments_OnTypeWithNoGenericArgs_ReturnsEmptyList()
+        {
+            var type = typeof(Person);
+            var result = Reflect.OnTypes.GetGenericArguments(type);
+            Assert.Empty(result);
+        }
+        
+        [Fact]
+        public void GetGenericArguments_OnTypeWith1GenericArg_ReturnsListWith1Item()
+        {
+            var type = typeof(IEnumerable<Person>);
+            var result = Reflect.OnTypes.GetGenericArguments(type);
+            Assert.NotEmpty(result);
+            Assert.Equal(1, result.Count());
+        }
     }
 }
