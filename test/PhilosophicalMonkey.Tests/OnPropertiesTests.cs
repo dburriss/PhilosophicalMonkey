@@ -185,6 +185,15 @@ namespace PhilosophicalMonkey.Tests
         }
 
         [Fact]
+        public void SetProperty_PrivateProperty_SetsProperty()
+        {
+            var model = new TestModel();
+            Reflect.OnProperties.SetProperty<TestModel>(model, x => x.Spy, "Bond");
+
+            Assert.Equal("Bond", model.Spy);
+        }
+
+        [Fact]
         public void TypeSafeSetProperty_PublicTypeSafeProperty_SetsProperty()
         {
             var model = new TestModel();
