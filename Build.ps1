@@ -13,8 +13,8 @@ function Test{Param([Parameter(Position=0,Mandatory=$true)][String] $path)return
 #==============================================================
 $projects = @(
     (Nuget ".\src\PhilosophicalMonkey"), 
-    (Test ".\test\PhilosophicalMonkey.Tests")
-    (Project ".\test\TestModels")
+	(Project ".\test\TestModels"),
+    (Test ".\test\PhilosophicalMonkey.Tests")    
 )
 
 $defaultNugetVersion = "v3.4.4"
