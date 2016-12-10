@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "I am a reflection helper that helps you reflect on the code around you. Provides a standard interface for common reflection tasks that works acorss .NET full framework and .NET Core.",
   "authors": [ "Devon Burriss" ],
   "packOptions": {

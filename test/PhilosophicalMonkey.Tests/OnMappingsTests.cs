@@ -9,19 +9,19 @@ namespace PhilosophicalMonkey.Tests
     {
 
         [Fact]
-        public void MapDynamicToDictionary_OnCorrectlyShapedDynamic_MapsToDictionary()
+        public void TurnObjectIntoDictionary_OnCorrectlyShapedDynamic_MapsToDictionary()
         {
-            dynamic d = new { Nr = 1, Name = "Devon" };
+            dynamic d = new { Nr = 1, Name = "Bob" };
             var dictionary = Reflect.OnMappings.TurnObjectIntoDictionary(d);
 
             Assert.Equal(2, dictionary.Keys.Count);
         }
 
         [Fact]
-        public void MapComplexTypeToDictionary_OnAnyComplexType_MapsToDictionary()
+        public void TurnObjectIntoDictionary_OnAnyComplexType_MapsToDictionary()
         {
             var complexPerson = new Person() {
-                Name = "Complex",
+                Name = "Bob",
                 DOB = DateTime.Now,
                 Address = new Address()
                 {
@@ -34,11 +34,11 @@ namespace PhilosophicalMonkey.Tests
         }
 
         [Fact]
-        public void MapComplexTypeToDictionary_OnAnyComplexType_MapsSubTypesToDictionary()
+        public void TurnObjectIntoDictionary_OnAnyComplexType_MapsSubTypesToDictionary()
         {
             var complexPerson = new Person()
             {
-                Name = "Complex",
+                Name = "Bob",
                 DOB = DateTime.Now,
                 Address = new Address()
                 {
@@ -51,11 +51,11 @@ namespace PhilosophicalMonkey.Tests
         }
 
         [Fact]
-        public void MapComplexTypeToDictionary_OnAnyComplexType_SubDictionaryKeyCountEqualsTwo()
+        public void TurnObjectIntoDictionary_OnAnyComplexType_SubDictionaryKeyCountEqualsTwo()
         {
             var complexPerson = new Person()
             {
-                Name = "Complex",
+                Name = "Bob",
                 DOB = DateTime.Now,
                 Address = new Address()
                 {
@@ -68,14 +68,130 @@ namespace PhilosophicalMonkey.Tests
         }
 
         [Fact]
+        public void TurnDictionaryIntoObject_OnAnyComplexType_FillsInNestedValues()
+        {
+            var dictionary = new Dictionary<string, object>()
+            {
+                { "Name", "Bob" },
+                { "DOB", DateTime.UtcNow },
+                { "Address", new Dictionary<string, object>()
+                    {
+                        { "StreetNr", 1 },
+                        { "Street", "Main Rd" }
+                    }
+                },
+            };
+            var instance = (Person)Reflect.OnMappings.TurnDictionaryIntoObject(dictionary, typeof(Person));
+            Assert.Equal(instance.Name, "Bob");
+            Assert.Equal(instance.Address.Street, "Main Rd");
+        }
+
+        [Fact]
+        public void TurnDictionaryIntoObjectT_OnAnyComplexType_FillsInNestedValues()
+        {
+            var dictionary = new Dictionary<string, object>()
+            {
+                { "Name", "Bob" },
+                { "DOB", DateTime.UtcNow },
+                { "Address", new Dictionary<string, object>()
+                    {
+                        { "StreetNr", 1 },
+                        { "Street", "Main Rd" }
+                    }
+                },
+            };
+            var instance = Reflect.OnMappings.TurnDictionaryIntoObject<Person>(dictionary);
+            Assert.Equal(instance.Name, "Bob");
+            Assert.Equal(instance.Address.Street, "Main Rd");
+        }
+
+        [Fact]
         public void Map_FromDictionaryToFlatType_MapsValues()
         {
-            dynamic d = new { StreetNr = 1, Street = "Main Rd" };
             var dictionary = new Dictionary<string, object>() { { "StreetNr", 1 }, { "Street", "Main Rd" } };
             var instance = new Address();
             Reflect.OnMappings.Map(dictionary, instance);
             Assert.Equal(instance.StreetNr, 1);
             Assert.Equal(instance.Street, "Main Rd");
+        }
+
+        [Fact]
+        public void Map_FromDictionariesToComplexType_MapsValues()
+        {
+            var dictionary = new Dictionary<string, object>()
+            {
+                { "Name", "Bob" },
+                { "DOB", DateTime.UtcNow },
+                { "Address", new Dictionary<string, object>()
+                    {
+                        { "StreetNr", 1 },
+                        { "Street", "Main Rd" }
+                    }
+                },
+            };
+            var instance = new Person();
+            Reflect.OnMappings.Map(dictionary, instance);
+            Assert.Equal(instance.Name, "Bob");
+            Assert.Equal(instance.Address.Street, "Main Rd");
+        }
+
+        [Fact]
+        public void MapT_FromDictionariesToComplexType_CreatesInstanceWithValuesSet()
+        {
+            var dictionary = new Dictionary<string, object>()
+            {
+                { "Name", "Bob" },
+                { "DOB", DateTime.UtcNow },
+                { "Address", new Dictionary<string, object>()
+                    {
+                        { "StreetNr", 1 },
+                        { "Street", "Main Rd" }
+                    }
+                },
+            };
+            var instance =  Reflect.OnMappings.Map<Person>(dictionary);
+            Assert.Equal(instance.Name, "Bob");
+            Assert.Equal(instance.Address.Street, "Main Rd");
+        }
+
+        [Fact]
+        public void Map_BetweenSameTypes_MapsAllValues()
+        {
+            var p1 = new Person()
+            {
+                Name = "Bob",
+                DOB = DateTime.Now,
+                Address = new Address()
+                {
+                    Street = "Complex Street",
+                    StreetNr = 1
+                }
+            };
+
+            var p2 = new Person();
+
+            Reflect.OnMappings.Map(p1, p2);
+            Assert.Equal(p1.Name, p2.Name);
+            Assert.Equal(p1.DOB, p2.DOB);
+            Assert.Equal(p1.Address.Street, p2.Address.Street);
+            Assert.Equal(p1.Address.StreetNr, p2.Address.StreetNr);
+        }
+
+        [Fact]
+        public void Map_BetweenSameTypesWithNull_MapsAllValues()
+        {
+            var p1 = new Person()
+            {
+                Name = null,
+                DOB = DateTime.Now,
+                Address = null
+            };
+            var p2 = new Person();
+
+            Reflect.OnMappings.Map(p1, p2);
+
+            Assert.Null(p2.Name);
+            Assert.Null(p2.Address);
         }
 
     }
