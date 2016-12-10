@@ -117,4 +117,4 @@ The Philosphical Monkey has a couple topics he likes to reflect on. These includ
 * `void Map<TTo>(IDictionary<string, object> dictionary, TTo instance)`
 * `object TurnDictionaryIntoObject(IDictionary<string, object> dictionary, Type type)`
 * `TTo TurnDictionaryIntoObject<TTo>(IDictionary<string, object> dictionary)`
-* `IDictionary<string, object> TurnObjectIntoDictionary(object data)`
+* `TTo TurnDictionaryIntoObject<TTo>(IDictionary<string, object> dictionary)`

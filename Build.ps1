@@ -14,6 +14,7 @@ function Test{Param([Parameter(Position=0,Mandatory=$true)][String] $path)return
 $projects = @(
     (Nuget ".\src\PhilosophicalMonkey"), 
     (Test ".\test\PhilosophicalMonkey.Tests")
+    (Project ".\test\TestModels")
 )
 
 $defaultNugetVersion = "v3.4.4"
@@ -149,7 +150,7 @@ foreach ($project in $projects) {
 }
 
 # Nuget
-iex $env:Nuget
+# iex $env:Nuget
 
 Header "++++++++++++++++++++++++++++ DONE ++++++++++++++++++++++++++++"
 Yellow "=============================================================="
