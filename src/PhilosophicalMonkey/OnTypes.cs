@@ -135,7 +135,7 @@ namespace PhilosophicalMonkey
             public static bool IsAssignable(Type concretion, Type abstraction)
             {
 #if COREFX
-                return abstraction.GetTypeInfo().IsAssignableFrom(concretion);
+                return abstraction.GetTypeInfo().IsAssignableFrom(concretion.GetTypeInfo());
 #endif
 #if NET
                 return abstraction.IsAssignableFrom(concretion);
