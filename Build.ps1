@@ -139,7 +139,7 @@ foreach ($project in $projects) {
     if($project.Item2 -eq "Nuget")
     {
         Header " PACKAGING FOR $project"
-        Exec { & dotnet pack $project.Item1 -c Release -o .\artifacts } 
+        Exec { & dotnet pack $project.Item1 -c Release -o ..\..\artifacts } 
     }
 }
 
