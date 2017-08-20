@@ -11,6 +11,8 @@
     <PackageProjectUrl>https://github.com/dburriss/PhilosophicalMonkey</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/dburriss/PhilosophicalMonkey/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dotnet5.4</PackageTargetFallback>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
+    <FileVersion>1.4.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net451' ">

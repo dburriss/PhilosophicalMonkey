@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
+using static PhilosophicalMonkey.Reflect;
 
 namespace PhilosophicalMonkey
 {
@@ -21,6 +23,16 @@ namespace PhilosophicalMonkey
             }
 
             return (T)attribute;
+        }
+
+        public static IEnumerable<CustomAttributeData> CustomAttributes(this MemberInfo memberInfo)
+        {
+            return OnAttributes.GetCustomAttributesData(memberInfo);
+        }
+
+        public static ConstructorInfo Constructor(this CustomAttributeData attributeData)
+        {
+            return OnAttributes.ConstructorInfo(attributeData);
         }
     }
 }
