@@ -102,13 +102,16 @@ namespace PhilosophicalMonkey
                 throw new NotImplementedException();
             }
 
+            private static Func<Type, bool> isSimple = type =>  type == typeof(string) 
+                                                                || type == typeof(DateTime)
+                                                                || type == typeof(DateTimeOffset);
             public static bool IsSimple(Type type)
             {
 #if COREFX
-                return type.GetTypeInfo().IsPrimitive || type == typeof(string) || type == typeof(DateTime);
+                return type.GetTypeInfo().IsPrimitive || isSimple(type);
 #endif
 #if NET
-                return type.IsPrimitive || type == typeof(string) || type == typeof(DateTime);
+                return type.IsPrimitive || isSimple(type);
 #endif
                 throw new NotImplementedException();
             }
@@ -135,7 +138,7 @@ namespace PhilosophicalMonkey
             public static bool IsAssignable(Type concretion, Type abstraction)
             {
 #if COREFX
-                return abstraction.GetTypeInfo().IsAssignableFrom(concretion);
+                return abstraction.GetTypeInfo().IsAssignableFrom(concretion.GetTypeInfo());
 #endif
 #if NET
                 return abstraction.IsAssignableFrom(concretion);

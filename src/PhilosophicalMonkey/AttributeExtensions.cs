@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
+using static PhilosophicalMonkey.Reflect;
 
 namespace PhilosophicalMonkey
 {
-    public static class Extensions
+    public static class AttributeExtensions
     {
         public static T GetAttribute<T>(this MemberInfo member, bool isRequired = false) where T : Attribute
         {
@@ -21,6 +23,16 @@ namespace PhilosophicalMonkey
             }
 
             return (T)attribute;
+        }
+
+        public static IEnumerable<CustomAttributeData> CustomAttributes(this MemberInfo memberInfo)
+        {
+            return OnAttributes.GetCustomAttributesData(memberInfo);
+        }
+
+        public static ConstructorInfo Constructor(this CustomAttributeData attributeData)
+        {
+            return OnAttributes.ConstructorInfo(attributeData);
         }
     }
 }

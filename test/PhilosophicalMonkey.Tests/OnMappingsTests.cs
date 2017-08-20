@@ -11,7 +11,7 @@ namespace PhilosophicalMonkey.Tests
         [Fact]
         public void TurnObjectIntoDictionary_OnCorrectlyShapedDynamic_MapsToDictionary()
         {
-            dynamic d = new { Nr = 1, Name = "Bob" };
+            dynamic d = new {Nr = 1, Name = "Bob"};
             var dictionary = Reflect.OnMappings.TurnObjectIntoDictionary(d);
 
             Assert.Equal(2, dictionary.Keys.Count);
@@ -20,17 +20,18 @@ namespace PhilosophicalMonkey.Tests
         [Fact]
         public void TurnObjectIntoDictionary_OnAnyComplexType_MapsToDictionary()
         {
-            var complexPerson = new Person() {
+            var complexPerson = new Person()
+            {
                 Name = "Bob",
                 DOB = DateTime.Now,
                 Address = new Address()
                 {
-                    Street ="Complex Street",
+                    Street = "Complex Street",
                     StreetNr = 1
                 }
             };
             var dictionary = Reflect.OnMappings.TurnObjectIntoDictionary(complexPerson);
-            Assert.IsType<Dictionary<string,object>>(dictionary);
+            Assert.IsType<Dictionary<string, object>>(dictionary);
         }
 
         [Fact]
@@ -64,7 +65,7 @@ namespace PhilosophicalMonkey.Tests
                 }
             };
             var dictionary = Reflect.OnMappings.TurnObjectIntoDictionary(complexPerson);
-            Assert.Equal(((Dictionary<string,object>)dictionary["Address"]).Keys.Count, 2);
+            Assert.Equal(((Dictionary<string, object>) dictionary["Address"]).Keys.Count, 2);
         }
 
         [Fact]
@@ -72,16 +73,17 @@ namespace PhilosophicalMonkey.Tests
         {
             var dictionary = new Dictionary<string, object>()
             {
-                { "Name", "Bob" },
-                { "DOB", DateTime.UtcNow },
-                { "Address", new Dictionary<string, object>()
+                {"Name", "Bob"},
+                {"DOB", DateTime.UtcNow},
+                {
+                    "Address", new Dictionary<string, object>()
                     {
-                        { "StreetNr", 1 },
-                        { "Street", "Main Rd" }
+                        {"StreetNr", 1},
+                        {"Street", "Main Rd"}
                     }
                 },
             };
-            var instance = (Person)Reflect.OnMappings.TurnDictionaryIntoObject(dictionary, typeof(Person));
+            var instance = (Person) Reflect.OnMappings.TurnDictionaryIntoObject(dictionary, typeof(Person));
             Assert.Equal(instance.Name, "Bob");
             Assert.Equal(instance.Address.Street, "Main Rd");
         }
@@ -91,12 +93,13 @@ namespace PhilosophicalMonkey.Tests
         {
             var dictionary = new Dictionary<string, object>()
             {
-                { "Name", "Bob" },
-                { "DOB", DateTime.UtcNow },
-                { "Address", new Dictionary<string, object>()
+                {"Name", "Bob"},
+                {"DOB", DateTime.UtcNow},
+                {
+                    "Address", new Dictionary<string, object>()
                     {
-                        { "StreetNr", 1 },
-                        { "Street", "Main Rd" }
+                        {"StreetNr", 1},
+                        {"Street", "Main Rd"}
                     }
                 },
             };
@@ -108,7 +111,7 @@ namespace PhilosophicalMonkey.Tests
         [Fact]
         public void Map_FromDictionaryToFlatType_MapsValues()
         {
-            var dictionary = new Dictionary<string, object>() { { "StreetNr", 1 }, { "Street", "Main Rd" } };
+            var dictionary = new Dictionary<string, object>() {{"StreetNr", 1}, {"Street", "Main Rd"}};
             var instance = new Address();
             Reflect.OnMappings.Map(dictionary, instance);
             Assert.Equal(instance.StreetNr, 1);
@@ -120,12 +123,13 @@ namespace PhilosophicalMonkey.Tests
         {
             var dictionary = new Dictionary<string, object>()
             {
-                { "Name", "Bob" },
-                { "DOB", DateTime.UtcNow },
-                { "Address", new Dictionary<string, object>()
+                {"Name", "Bob"},
+                {"DOB", DateTime.UtcNow},
+                {
+                    "Address", new Dictionary<string, object>()
                     {
-                        { "StreetNr", 1 },
-                        { "Street", "Main Rd" }
+                        {"StreetNr", 1},
+                        {"Street", "Main Rd"}
                     }
                 },
             };
@@ -140,16 +144,17 @@ namespace PhilosophicalMonkey.Tests
         {
             var dictionary = new Dictionary<string, object>()
             {
-                { "Name", "Bob" },
-                { "DOB", DateTime.UtcNow },
-                { "Address", new Dictionary<string, object>()
+                {"Name", "Bob"},
+                {"DOB", DateTime.UtcNow},
+                {
+                    "Address", new Dictionary<string, object>()
                     {
-                        { "StreetNr", 1 },
-                        { "Street", "Main Rd" }
+                        {"StreetNr", 1},
+                        {"Street", "Main Rd"}
                     }
                 },
             };
-            var instance =  Reflect.OnMappings.Map<Person>(dictionary);
+            var instance = Reflect.OnMappings.Map<Person>(dictionary);
             Assert.Equal(instance.Name, "Bob");
             Assert.Equal(instance.Address.Street, "Main Rd");
         }
@@ -194,5 +199,73 @@ namespace PhilosophicalMonkey.Tests
             Assert.Null(p2.Address);
         }
 
+
+        [Fact]
+        public void Map_BetweenDifferentTypes_MapsAllValuesInSource()
+        {
+            var p1 = new Person()
+            {
+                Name = null,
+                DOB = DateTime.Now,
+                Address = null
+            };
+            var p2 = new Person();
+
+            Reflect.OnMappings.Map(p1, p2);
+
+            Assert.Null(p2.Name);
+            Assert.Null(p2.Address);
+        }
+
+        [Fact]
+        public void Map_BetweenDifferentTypes_MapsAllValuesShared()
+        {
+            var x = new X()
+            {
+                Num = 1,
+                Name = null
+            };
+            var y = new Y();
+
+            Reflect.OnMappings.Map(x, y);
+
+            Assert.Null(y.Name);
+            Assert.Null(y.JustInY);
+            Assert.Equal(1, y.Num);
+        }
+
+        [Fact]
+        public void Map_WhenPropertiesArePrivate_DoesMap()
+        {
+            var x = new X()
+            {
+                Num = 1,
+                Name = null
+            };
+            var y = new Y();
+
+            Reflect.OnMappings.Map(x, y);
+
+            Assert.Null(y.Name);
+            Assert.Null(y.JustInY);
+            Assert.Equal(1, y.Num);
+        }
+
+
+        internal class X
+        {
+            public int Num { get; set; }
+            public string Name { get; set; }
+            public string JustInX { get; set; }
+            internal string Xxx { get; private set; }
+
+        }
+
+        internal class Y
+        {
+            public int Num { get; set; }
+            public string Name { get; set; }
+            internal string JustInY { get; private set; }
+        }
     }
 }

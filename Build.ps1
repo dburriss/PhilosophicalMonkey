@@ -12,13 +12,10 @@ function Test{Param([Parameter(Position=0,Mandatory=$true)][String] $path)return
 # + Test - `restore` & `build` & `test` run but not `pack`
 #==============================================================
 $projects = @(
-    (Nuget ".\src\PhilosophicalMonkey"), 
-	(Project ".\test\TestModels"),
-    (Test ".\test\PhilosophicalMonkey.Tests")    
+    (Nuget ".\src\PhilosophicalMonkey\PhilosophicalMonkey.csproj"), 
+	(Project ".\test\TestModels\TestModels.csproj"),
+    (Test ".\test\PhilosophicalMonkey.Tests\PhilosophicalMonkey.Tests.csproj")    
 )
-
-$defaultNugetVersion = "v3.4.4"
-$env:Nuget = ".\tools\NuGet.exe"
 
 if (Test-Path -Path .\global.json)
 {
@@ -27,7 +24,8 @@ if (Test-Path -Path .\global.json)
 }
 else
 {
-    throw "No global.json found in project directory"
+    #$conf.sdk.version = "1.1.0"
+    #throw "No global.json found in project directory"
 }
 
 #==============================================================
@@ -36,7 +34,7 @@ else
 function EnsureDotnetCliInstalled{  
     [cmdletbinding()]
     param(
-        [string]$dotnetCliInstallUri = 'https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0/scripts/obtain/dotnet-install.ps1',
+        [string]$dotnetCliInstallUri = 'https://raw.githubusercontent.com/dotnet/cli/rel/1.1.0/scripts/obtain/dotnet-install.ps1',
         [string]$dotnetVersion = $conf.sdk.version
     )
     if(-not (Get-Command "dotnet.exe" -errorAction SilentlyContinue)){
@@ -56,29 +54,25 @@ function EnsureDotnetCliInstalled{
 }
 
 #==============================================================
-# INSTALL of nuget if its not in solution
+# INSTALL of PsBuild if it is not installed
 #==============================================================
-function EnsureLatestNugetAvailable{  
+function EnsurePsbuildInstalled{  
     [cmdletbinding()]
     param(
-        [string]$nugetVersion = $conf.nuget
+        [string]$psbuildInstallUri = 'https://raw.githubusercontent.com/ligershark/psbuild/master/src/GetPSBuild.ps1'
     )
-
-    $v = @{ $true = $defaultNugetVersion; $false = $nugetVersion }[$nugetVersion -eq $null]
-    Write-Host 'Target nuget' $v
-    $nugetUri = 'https://dist.nuget.org/win-x86-commandline/'+$v+'/NuGet.exe'
-    if(-not (Get-Command ".\tools\NuGet.exe" -errorAction SilentlyContinue)){
-        'Downloading NuGet.exe from [{0}]' -f $nugetUri | Write-Verbose
-        Invoke-WebRequest -Uri $nugetUri -OutFile "$($env:TEMP)\NuGet.exe"
-        $env:Nuget = "$($env:TEMP)\NuGet.exe"
+    if(-not (Get-Command "Invoke-MsBuild" -errorAction SilentlyContinue)){
+        'Installing psbuild from [{0}]' -f $psbuildInstallUri | Write-Verbose
+        Invoke-WebRequest -Uri $psbuildInstallUri -UseBasicParsing -OutFile "$($env:TEMP)\psbuild-install.ps1"
+        . "$($env:TEMP)\psbuild-install.ps1"
     }
     else{
-        'NuGet.exe found in .\tools' | Write-Host
+        'psbuild already loaded, skipping download' | Write-Verbose
     }
 
     # make sure it's loaded and throw if not
-    if(-not (Get-Command $env:Nuget -errorAction SilentlyContinue)){
-        throw ('Unable to DL Nuget to [{0}]' -f $env:Nuget)
+    if(-not (Get-Command "Invoke-MsBuild" -errorAction SilentlyContinue)){
+        throw ('Unable to install/load psbuild from [{0}]' -f $psbuildInstallUri)
     }
 }
 
@@ -114,8 +108,8 @@ function Header{
 #==============================================================
 if(Test-Path .\artifacts) { Remove-Item .\artifacts -Force -Recurse }
 
-EnsureDotnetCliInstalled -Verbose
-EnsureLatestNugetAvailable -Verbose
+# EnsureDotnetCliInstalled
+# EnsurePsbuildInstalled
 
 # Package and Build
 foreach ($project in $projects) {
@@ -126,7 +120,7 @@ foreach ($project in $projects) {
     Exec { & dotnet build $project.Item1 }
 }
 
-# Get Revision
+# Get Rivision
 Header " CHECK REVISION"
 $revision = @{ $true = $env:APPVEYOR_BUILD_NUMBER; $false = 1 }[$env:APPVEYOR_BUILD_NUMBER -ne $NULL];
 $revision = "{0:D4}" -f [convert]::ToInt32($revision, 10)
@@ -136,7 +130,7 @@ $revision = "{0:D4}" -f [convert]::ToInt32($revision, 10)
 foreach ($project in $projects) {
     if($project.Item2 -eq "Test")
     {
-        Header " RUNNING TESTS FOR $project"
+        Header " RUNNING TESTS FOR $($project.Item1)" 
         Exec { & dotnet test $project.Item1 -c Release }
     }
 }
@@ -145,12 +139,9 @@ foreach ($project in $projects) {
     if($project.Item2 -eq "Nuget")
     {
         Header " PACKAGING FOR $project"
-        Exec { & dotnet pack $project.Item1 -c Release -o .\artifacts --version-suffix=$revision } 
+        Exec { & dotnet pack $project.Item1 -c Release -o .\artifacts } 
     }
 }
-
-# Nuget
-# iex $env:Nuget
 
 Header "++++++++++++++++++++++++++++ DONE ++++++++++++++++++++++++++++"
 Yellow "=============================================================="
