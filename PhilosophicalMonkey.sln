@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{75C104B1-D792-4433-BC2E-598F3F5C0584}"
 EndProject
@@ -9,18 +9,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
 		Build.ps1 = Build.ps1
-		global.json = global.json
 		NuGet.Config = NuGet.Config
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D9F8F691-DCFC-4BFD-A89F-DD0032004813}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PhilosophicalMonkey", "src\PhilosophicalMonkey\PhilosophicalMonkey.xproj", "{82B16EBE-34CD-4B13-B151-8EF6ADD23F6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhilosophicalMonkey", "src\PhilosophicalMonkey\PhilosophicalMonkey.csproj", "{82B16EBE-34CD-4B13-B151-8EF6ADD23F6D}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PhilosophicalMonkey.Tests", "test\PhilosophicalMonkey.Tests\PhilosophicalMonkey.Tests.xproj", "{837A579D-29B5-485A-8320-55BB1039E6B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhilosophicalMonkey.Tests", "test\PhilosophicalMonkey.Tests\PhilosophicalMonkey.Tests.csproj", "{837A579D-29B5-485A-8320-55BB1039E6B7}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TestModels", "test\TestModels\TestModels.xproj", "{48AC5063-7F44-4DC3-8A12-67AEEBB6BF04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestModels", "test\TestModels\TestModels.csproj", "{48AC5063-7F44-4DC3-8A12-67AEEBB6BF04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,5 +47,8 @@ Global
 		{82B16EBE-34CD-4B13-B151-8EF6ADD23F6D} = {75C104B1-D792-4433-BC2E-598F3F5C0584}
 		{837A579D-29B5-485A-8320-55BB1039E6B7} = {D9F8F691-DCFC-4BFD-A89F-DD0032004813}
 		{48AC5063-7F44-4DC3-8A12-67AEEBB6BF04} = {D9F8F691-DCFC-4BFD-A89F-DD0032004813}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {858EE74C-F623-42EB-BDC9-5D3AF12DE32D}
 	EndGlobalSection
 EndGlobal

@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace PhilosophicalMonkey
 {
-    public static class Extensions
+    public static class AttributeExtensions
     {
         public static T GetAttribute<T>(this MemberInfo member, bool isRequired = false) where T : Attribute
         {
