@@ -65,6 +65,7 @@ The Philosphical Monkey has a couple topics he likes to reflect on. These includ
 
 * Types
 * Properties
+* Methods
 * Attributes
 * Mappings
 
@@ -103,6 +104,18 @@ The Philosphical Monkey has a couple topics he likes to reflect on. These includ
 * `object GetNestedPropertyValue(string name, object obj)`
 * `void SetProperty<TModel>(TModel instance, Expression<Func<TModel, object>> exp, object value)`
 * `void TypeSafeSetProperty<TModel, TPropertyType>(TModel instance, Expression<Func<TModel, TPropertyType>> exp, TPropertyType value)`
+
+### OnMethods
+
+* `IEnumerable<MethodInfo> GetMethods<T>(string name)`
+* `IEnumerable<MethodInfo> GetMethods<T>(bool excludeContructor = false, bool excludeSpecials = false)`
+* `IEnumerable<MethodInfo> GetMethods(Type type, bool excludeContructor = false, bool excludeSpecials = false)`
+* `MethodInfo GetMethod<T>(string name, params Type[] types)`
+* `MethodInfo GetMethod(Type type, string name, params Type[] types)`
+* `Call<TImplement, TResult>(TImplement instance, string name, params object[] args)`
+* `object Call(object instance, string name, params object[] args)`
+* `void VoidCall<TImplement>(TImplement instance, string name, params object[] args)`
+* `void VoidCall(object instance, string name, params object[] args)`
 
 ### OnAttributes
 
