@@ -80,5 +80,28 @@ namespace PhilosophicalMonkey.Tests
             var result = Reflect.OnMethods.Call<TestId, int>(instance, "op_Implicit", instance);
             Assert.Equal(1, result);
         }
+
+        [Fact]
+        public void ImplicitConvert_UsingTypeOperator_ReturnsValue()
+        {
+            TestId id = 1;
+            var result = Reflect.OnMethods.ImplicitConvert<int>(id);
+            Assert.Equal(1, result);
+        }
+
+        [Fact]
+        public void ImplicitConvert_UsingTypeOperatorToImplicitContainer_ReturnsValue()
+        {
+            int id = 1;
+            var result = Reflect.OnMethods.ImplicitConvert<TestId>(id);
+            Assert.Equal(1, (int)result);
+        }
+
+        [Fact]
+        public void ImplicitConvert_UsingTypeOperatorToImplicitContainerNotExist_ThrowsInvalidOperationException()
+        {
+            long id = 1;
+            Assert.Throws<InvalidOperationException>(() => Reflect.OnMethods.ImplicitConvert<TestId>(id));
+        }
     }
 }

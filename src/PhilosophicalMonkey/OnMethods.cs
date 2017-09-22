@@ -73,14 +73,13 @@ namespace PhilosophicalMonkey
             {
                 for (int i = 0; i < parameterInfo.Length; i++)
                 {
-                    if(parameterInfo[i].ParameterType != types[i])
+                    if(parameterInfo[i].ParameterType == types[i])
                     {
                         return true;
                     }
                 }
                 return false;
             }
-
 
             public static TResult Call<TImplement, TResult>(TImplement instance, string name, params object[] args)
             {
@@ -106,6 +105,35 @@ namespace PhilosophicalMonkey
                 var type = instance.GetType();
                 var types = args.Select(a => a.GetType()).ToArray();
                 var method = GetMethod(type, name, types);
+            }
+
+            public static T ImplicitConvert<T>(object obj)
+            {
+                var toType = typeof(T);
+                return (T)ImplicitConvert(toType, obj);
+            }
+
+            public static object ImplicitConvert(Type toType, object obj)
+            {
+                var argType = obj.GetType();
+
+                var argMi = GetMethods(argType)
+                    .Where(m => m.ReturnType == toType && MatchTypes(m.GetParameters(), new Type[] { argType })).FirstOrDefault();
+
+                if (argMi != null)
+                {
+                    return argMi.Invoke(obj, new[] { obj });
+                }
+
+                var toMi = GetMethods(toType)
+                    .Where(m => m.ReturnType == toType && MatchTypes(m.GetParameters(), new Type[] { argType })).FirstOrDefault();
+
+                if (toMi != null)
+                {
+                    return toMi.Invoke(obj, new[] { obj });
+                }
+
+                throw new InvalidOperationException($"No implicit conversion exists on type {toType.Name} or {argType.Name}");
             }
         }
     }
