@@ -85,6 +85,10 @@ The Philosphical Monkey has a couple topics he likes to reflect on. These includ
 * `Assembly GetAssembly(Type type)`
 * `bool bool IsAssignable(Type concretion, Type abstraction)`
 * `IEnumerable<Type> GetGenericArguments(Type type)`
+* `T ImplicitConvert<T>(object obj)`
+* `object ImplicitConvert(Type toType, object obj)`
+* `T ExplicitConvert<T>(object obj)`
+* `object ExplicitConvert(Type toType, object obj)`
 
 ### OnProperties
 
