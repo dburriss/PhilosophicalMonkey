@@ -102,7 +102,7 @@ namespace PhilosophicalMonkey
                 throw new NotImplementedException();
             }
 
-            private static Func<Type, bool> isSimple = type =>  type == typeof(string) 
+            private static Func<Type, bool> isSimple = type => type == typeof(string)
                                                                 || type == typeof(DateTime)
                                                                 || type == typeof(DateTimeOffset);
             public static bool IsSimple(Type type)
@@ -158,7 +158,49 @@ namespace PhilosophicalMonkey
                 throw new NotImplementedException();
             }
 
+            public static T ImplicitConvert<T>(object obj)
+            {
+                var toType = typeof(T);
+                return (T)ImplicitConvert(toType, obj);
+            }
+
+            public static object ImplicitConvert(Type toType, object obj)
+            {
+                var op = "op_Implicit";                
+                return Call(toType, op, obj);
+            }
+
+            public static T ExplicitConvert<T>(object obj)
+            {
+                var toType = typeof(T);
+                return (T)ExplicitConvert(toType, obj);
+            }
+
+            public static object ExplicitConvert(Type toType, object obj)
+            {
+                var op = "op_Explicit";
+                return Call(toType, op, obj);
+            }
+
+            private static object Call(Type toType, string name, object obj)
+            {
+                var argType = obj.GetType();
+                var argMi = OnMethods.GetMethod(argType, name, new Type[] { argType });
+
+                if (argMi != null)
+                {
+                    return argMi.Invoke(obj, new[] { obj });
+                }
+
+                var toMi = OnMethods.GetMethod(toType, name, new Type[] { argType });
+                if (toMi != null)
+                {
+                    return toMi.Invoke(obj, new[] { obj });
+                }
+
+                throw new InvalidOperationException($"No {name} exists on type {toType.Name} or {argType.Name}");
+            }
+
         }
-    
     }
 }

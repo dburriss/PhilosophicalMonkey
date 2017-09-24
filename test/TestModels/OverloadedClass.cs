@@ -21,6 +21,7 @@ namespace TestModels
             _value = value;
         }
 
+        public static explicit operator bool(TestId c) => c._value > 0 ? true : false;
         public static implicit operator int(TestId c) => c._value;
         public static implicit operator TestId(int i) => new TestId(i);
 

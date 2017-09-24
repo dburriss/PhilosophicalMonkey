@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace PhilosophicalMonkey
@@ -11,7 +12,7 @@ namespace PhilosophicalMonkey
         {
             public static IEnumerable<MethodInfo> GetMethods<T>(string name)
             {
-                return GetMethods(typeof(T));
+                return GetMethods(typeof(T)).Where(mi => mi.Name == name);
             }
 
             public static IEnumerable<MethodInfo> GetMethods<T>(bool excludeContructor = false, bool excludeSpecials = false)
@@ -22,13 +23,23 @@ namespace PhilosophicalMonkey
             public static IEnumerable<MethodInfo> GetMethods(Type type, bool excludeContructor = false, bool excludeSpecials = false)
             {
                 Func<MethodInfo, bool> predicate = m => FilterMethodInfo(m, excludeContructor, excludeSpecials);
+                return GetMethods(type, predicate);
+            }
+
+            public static IEnumerable<MethodInfo> GetMethods<T>(Func<MethodInfo, bool> predicate)
+            {
+                var type = typeof(T);
+                return GetMethods(type, predicate);
+            }
+
+            public static IEnumerable<MethodInfo> GetMethods(Type type, Func<MethodInfo, bool> predicate)
+            {
 #if COREFX
                 var methods =  type.GetTypeInfo().DeclaredMethods.Where(predicate);
                 return methods;
 #endif
 #if NET
-                var methods = type.GetMethods().Where(predicate);
-                return methods;
+                return type.GetMethods().Where(predicate);
 #endif
                 throw new NotImplementedException();
             }
@@ -48,37 +59,26 @@ namespace PhilosophicalMonkey
                 return true;
             }
 
-            public static MethodInfo GetMethod<T>(string name, params Type[] types)
+            public static MethodInfo GetMethod<T>(string name, params Type[] parameterTypes)
             {
-                return GetMethod(typeof(T), name, types);
+                return GetMethod(typeof(T), name, parameterTypes);
             }
 
-            public static MethodInfo GetMethod(Type type, string name, params Type[] types)
+            public static MethodInfo GetMethod(Type type, string name, params Type[] parameterTypes)
             {
 #if COREFX
                 var methods = type.GetTypeInfo().GetDeclaredMethods(name);
-                var method = methods.FirstOrDefault(mi => MatchTypes(mi.GetParameters(), types));
+                Func<ParameterInfo, Type> paramType = pi => pi.ParameterType;
+                var method = methods.FirstOrDefault(mi => mi.GetParameters().SequenceEqual(paramType, parameterTypes));
                 return method;
 #endif
 #if NET
-                var method = types.Any() 
-                    ? type.GetMethod(name, BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic, null, types, null) 
+                var method = parameterTypes.Any() 
+                    ? type.GetMethod(name, BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic, null, parameterTypes, null) 
                     : type.GetMethod(name, BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic);
                 return method;
 #endif
                 throw new NotImplementedException();
-            }
-
-            private static bool MatchTypes(ParameterInfo[] parameterInfo, Type[] types)
-            {
-                for (int i = 0; i < parameterInfo.Length; i++)
-                {
-                    if(parameterInfo[i].ParameterType == types[i])
-                    {
-                        return true;
-                    }
-                }
-                return false;
             }
 
             public static TResult Call<TImplement, TResult>(TImplement instance, string name, params object[] args)
@@ -105,35 +105,6 @@ namespace PhilosophicalMonkey
                 var type = instance.GetType();
                 var types = args.Select(a => a.GetType()).ToArray();
                 var method = GetMethod(type, name, types);
-            }
-
-            public static T ImplicitConvert<T>(object obj)
-            {
-                var toType = typeof(T);
-                return (T)ImplicitConvert(toType, obj);
-            }
-
-            public static object ImplicitConvert(Type toType, object obj)
-            {
-                var argType = obj.GetType();
-
-                var argMi = GetMethods(argType)
-                    .Where(m => m.ReturnType == toType && MatchTypes(m.GetParameters(), new Type[] { argType })).FirstOrDefault();
-
-                if (argMi != null)
-                {
-                    return argMi.Invoke(obj, new[] { obj });
-                }
-
-                var toMi = GetMethods(toType)
-                    .Where(m => m.ReturnType == toType && MatchTypes(m.GetParameters(), new Type[] { argType })).FirstOrDefault();
-
-                if (toMi != null)
-                {
-                    return toMi.Invoke(obj, new[] { obj });
-                }
-
-                throw new InvalidOperationException($"No implicit conversion exists on type {toType.Name} or {argType.Name}");
             }
         }
     }

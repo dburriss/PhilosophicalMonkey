@@ -187,5 +187,36 @@ namespace PhilosophicalMonkey.Tests
             Assert.NotEmpty(result);
             Assert.Equal(1, result.Count());
         }
+
+        [Fact]
+        public void ImplicitConvert_UsingTypeOperator_ReturnsValue()
+        {
+            TestId id = 1;
+            var result = Reflect.OnTypes.ImplicitConvert<int>(id);
+            Assert.Equal(1, result);
+        }
+
+        [Fact]
+        public void ImplicitConvert_UsingTypeOperatorToImplicitContainer_ReturnsValue()
+        {
+            int id = 1;
+            var result = Reflect.OnTypes.ImplicitConvert<TestId>(id);
+            Assert.Equal(1, (int)result);
+        }
+
+        [Fact]
+        public void ImplicitConvert_UsingTypeOperatorToImplicitContainerNotExist_ThrowsInvalidOperationException()
+        {
+            long id = 1;
+            Assert.Throws<InvalidOperationException>(() => Reflect.OnTypes.ImplicitConvert<TestId>(id));
+        }
+
+        [Fact]
+        public void ExplicitConvert_UsingTypeOperatorToImplicitContainer_ReturnsValue()
+        {
+            TestId id = 1;
+            var result = Reflect.OnTypes.ExplicitConvert<bool>(id);
+            Assert.True(result);
+        }
     }
 }
