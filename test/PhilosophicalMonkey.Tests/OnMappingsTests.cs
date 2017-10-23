@@ -65,7 +65,7 @@ namespace PhilosophicalMonkey.Tests
                 }
             };
             var dictionary = Reflect.OnMappings.TurnObjectIntoDictionary(complexPerson);
-            Assert.Equal(((Dictionary<string, object>) dictionary["Address"]).Keys.Count, 2);
+            Assert.Equal(2, ((Dictionary<string, object>) dictionary["Address"]).Keys.Count);
         }
 
         [Fact]
@@ -84,8 +84,8 @@ namespace PhilosophicalMonkey.Tests
                 },
             };
             var instance = (Person) Reflect.OnMappings.TurnDictionaryIntoObject(dictionary, typeof(Person));
-            Assert.Equal(instance.Name, "Bob");
-            Assert.Equal(instance.Address.Street, "Main Rd");
+            Assert.Equal("Bob", instance.Name);
+            Assert.Equal("Main Rd", instance.Address.Street);
         }
 
         [Fact]
@@ -104,8 +104,8 @@ namespace PhilosophicalMonkey.Tests
                 },
             };
             var instance = Reflect.OnMappings.TurnDictionaryIntoObject<Person>(dictionary);
-            Assert.Equal(instance.Name, "Bob");
-            Assert.Equal(instance.Address.Street, "Main Rd");
+            Assert.Equal("Bob", instance.Name);
+            Assert.Equal("Main Rd", instance.Address.Street);
         }
 
         [Fact]
@@ -114,8 +114,8 @@ namespace PhilosophicalMonkey.Tests
             var dictionary = new Dictionary<string, object>() {{"StreetNr", 1}, {"Street", "Main Rd"}};
             var instance = new Address();
             Reflect.OnMappings.Map(dictionary, instance);
-            Assert.Equal(instance.StreetNr, 1);
-            Assert.Equal(instance.Street, "Main Rd");
+            Assert.Equal(1, instance.StreetNr);
+            Assert.Equal("Main Rd", instance.Street);
         }
 
         [Fact]
@@ -135,8 +135,8 @@ namespace PhilosophicalMonkey.Tests
             };
             var instance = new Person();
             Reflect.OnMappings.Map(dictionary, instance);
-            Assert.Equal(instance.Name, "Bob");
-            Assert.Equal(instance.Address.Street, "Main Rd");
+            Assert.Equal("Bob", instance.Name);
+            Assert.Equal("Main Rd", instance.Address.Street);
         }
 
         [Fact]
@@ -155,8 +155,8 @@ namespace PhilosophicalMonkey.Tests
                 },
             };
             var instance = Reflect.OnMappings.Map<Person>(dictionary);
-            Assert.Equal(instance.Name, "Bob");
-            Assert.Equal(instance.Address.Street, "Main Rd");
+            Assert.Equal("Bob", instance.Name);
+            Assert.Equal("Main Rd", instance.Address.Street);
         }
 
         [Fact]

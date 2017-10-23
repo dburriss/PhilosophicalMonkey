@@ -170,7 +170,7 @@ namespace PhilosophicalMonkey.Tests
             Assert.True(result);
         }
 
-        
+
         [Fact]
         public void GetGenericArguments_OnTypeWithNoGenericArgs_ReturnsEmptyList()
         {
@@ -178,7 +178,7 @@ namespace PhilosophicalMonkey.Tests
             var result = Reflect.OnTypes.GetGenericArguments(type);
             Assert.Empty(result);
         }
-        
+
         [Fact]
         public void GetGenericArguments_OnTypeWith1GenericArg_ReturnsListWith1Item()
         {

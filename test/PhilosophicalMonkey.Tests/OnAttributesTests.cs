@@ -11,13 +11,23 @@ namespace PhilosophicalMonkey.Tests
         [Fact]
         public void GetAttribute_WithAttributeNotPresentOnTypeAndRequired_ThrowsArgumentException()
         {
-            Assert.Throws<ArgumentException>(() => Reflect.OnAttributes.GetAttribute<CustomTestAttribute>(typeof(Base), true));
+#if COREFX
+            MemberInfo mi = (MemberInfo)typeof(Base).GetTypeInfo();
+#elif NET
+            MemberInfo mi = (MemberInfo)typeof(Base);
+#endif
+            Assert.Throws<ArgumentException>(() => Reflect.OnAttributes.GetAttribute<CustomTestAttribute>(mi, true));
         }
 
         [Fact]
         public void GetAttribute_WithAttributeNotPresentOnType_ReturnsNull()
         {
-            var attribute = Reflect.OnAttributes.GetAttribute<CustomTestAttribute>(typeof(Base));
+#if COREFX
+            MemberInfo mi = (MemberInfo)typeof(Base).GetTypeInfo();
+#elif NET
+            MemberInfo mi = (MemberInfo)typeof(Base);
+#endif
+            var attribute = Reflect.OnAttributes.GetAttribute<CustomTestAttribute>(mi);
 
             Assert.Null(attribute);
         }
@@ -25,7 +35,12 @@ namespace PhilosophicalMonkey.Tests
         [Fact]
         public void GetAttribute_WithAttributePresentOnType_ReturnsAttribute()
         {
-            var attribute = Reflect.OnAttributes.GetAttribute<CustomTestAttribute>(typeof(TestModel));
+#if COREFX
+            MemberInfo mi = (MemberInfo)typeof(Base).GetTypeInfo();
+#elif NET
+            MemberInfo mi = (MemberInfo)typeof(TestModel);
+#endif
+            var attribute = Reflect.OnAttributes.GetAttribute<CustomTestAttribute>(mi);
 
             Assert.NotNull(attribute);
             Assert.IsType<CustomTestAttribute>(attribute);

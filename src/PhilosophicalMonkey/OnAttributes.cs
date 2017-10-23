@@ -32,9 +32,7 @@ namespace PhilosophicalMonkey
 
 #if COREFX
                 return memberInfo.CustomAttributes;
-#endif
-
-#if NET
+#elif NET
                 return memberInfo.GetCustomAttributesData();
 #endif
                 throw new NotImplementedException();
@@ -45,9 +43,7 @@ namespace PhilosophicalMonkey
 #if COREFX
                 //TODO: check against arguments
                 return attributeData.AttributeType.GetTypeInfo().DeclaredConstructors.First();
-#endif
-
-#if NET
+#elif NET
                 return attributeData.Constructor;
 #endif
                 throw new NotImplementedException();
